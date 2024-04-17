@@ -1,7 +1,7 @@
 <footer class="footer-section">
     <div class="container relative">
 
-        <div class="sofa-img">
+        <div class="sofa-img mt-5">
             <img src="../images/sofa.png" alt="Image" class="img-fluid">
         </div>
 
@@ -107,3 +107,9 @@
 
     </div>
 </footer>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/tiny-slider.js"></script>
+<script src="../js/custom.js"></script>
+</body>
+
+</html>

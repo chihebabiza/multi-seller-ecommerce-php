@@ -25,29 +25,37 @@ if (isset($_POST['updateProfile'])) {
 }
 
 ?>
+<!-- Start Header/Navigation -->
+<?php include("../inc/header.php") ?>
+<!-- End Header/Navigation -->
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-</head>
-
-<body>
+<!-- Start Contact Form -->
+<div class="container mt-5 mb-5">
+    <h2 class="text-center">Edit your profile</h2>
     <br>
-    <form style="text-align: center;" method="post" action="">
-        <h3>Welcome, <?php echo $_SESSION['vendorName']; ?></h3>
-        <h1>Edit Profile</h1>
-        <label>Name:</label>
-        <input type="text" name="newName" value="<?php echo $name; ?>"><br><br>
-        <label>Email:</label>
-        <input type="email" name="newEmail" value="<?php echo $email; ?>"><br><br>
-        <label>New Password:</label>
-        <input type="password" name="newPassword"><br><br>
-        <input type="submit" name="updateProfile" value="Update Profile">
-    </form>
-</body>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Name</label>
+                    <input type="text" class="form-control" value="<?php echo $name; ?>" name="newName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" value="<?php echo $email; ?>" name="newEmail" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">New Password</label>
+                    <input type="password" class="form-control" name="newPassword" required>
+                </div>
+                <input type="submit" class="btn btn-primary w-100" value="Update" name="updateProfile">
+            </form>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>
+<!-- End Contact Form -->
 
-</html>
+<!-- Start Footer Section -->
+<?php include("../inc/footer.php") ?>
+<!-- End Footer Section -->

@@ -1,96 +1,189 @@
-<?php
-session_start();
-// Redirect to login page if the user is not logged in
-if (!isset($_SESSION['vendorName'])) {
-    header("Location: ../client/login.php");
-    exit();
-}
-
-// Include functions and database connection
-include("../config/connect.php");
-include("../config/function.php");
-
-// Fetch products for the logged-in vendor by vendor name
-$vendorName = $_SESSION['vendorName'];
-$products = getProductsByVendorName($vendorName, $conn);
-
-?>
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <style>
-        body {
-            padding: 20px 100px;
-        }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Untree.co">
+    <link rel="shortcut icon" href="favicon.png">
 
-        nav {
-            text-align: center;
-            font-size: 20px;
-        }
+    <meta name="description" content="" />
+    <meta name="keywords" content="bootstrap, bootstrap4" />
 
-        .products {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-gap: 20px;
-        }
-
-        .product {
-            background-color: green;
-            padding: 20px;
-        }
-
-        button {
-            font-size: 20px;
-        }
-
-        .price {
-            background-color: red;
-        }
-    </style>
+    <!-- Bootstrap CSS && Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/tiny-slider.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/dash.css" rel="stylesheet">
+    <title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
 </head>
 
 <body>
-    <nav>
-        <h3>Welcome, <?php echo $_SESSION['vendorName']; ?></h3>
-        <span><a href="add.php">Add Product</a></span>
-        <span><a href="orders.php">Orders</a></span> <!-- Link to the orders page -->
-        <span><a href="logout.php">Logout</a></span>
-        <span><a href="profile.php">Profile</a></span>
-        <span><a href="dashboard.php">Dashboard</a></span>
-    </nav>
-    <h2>My Products</h2>
-    <div class="products">
-        <?php
-        // Check if $products is set and not empty before iterating
-        if (isset($products) && !empty($products)) {
-            foreach ($products as $product) : ?>
-                <div class="product">
-                    <h3><?php echo $product['product_name']; ?></h3>
-                    <p><?php echo $product['description']; ?></p>
-                    <h3 class="price">Price: <?php echo $product['price']; ?></h3> <!-- Display product price -->
-                    <h3 class="status">Status: <?php echo $product['status']; ?></h3> <!-- Display product status -->
-                    <!-- Edit button with link to edit.php -->
-                    <a href="edit.php?product_id=<?php echo $product['product_id']; ?>"><button>Edit</button></a>
-                    <!-- Delete button with form submission -->
-                    <form method="post" action="delete.php">
-                        <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
-                        <button type="submit" onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
-                    </form>
-                    <hr>
-                    <h4><?php echo $product['seller_name']; ?></h4>
+    <!-- Start Header/Navigation -->
+    <?php include("../inc/dash.php") ?>
+    <!-- End Header/Navigation -->
+
+    <div class="container mb-5">
+        <!-- Start Welcome -->
+        <div class="py-5 mb-2 lc-block">
+            <div class="lc-block">
+                <div editable="rich">
+                    <h2 class="fw-bolder display-5">Welcome Vendor</h2>
                 </div>
-        <?php endforeach;
-        } else {
-            echo "<p>No products found.</p>";
-        }
-        ?>
+            </div>
+            <div class="lc-block col-md-8">
+                <div editable="rich">
+                    <p class="lead">Welcome to your dashboard! This is your space to manage your products, view sales data, and keep track of your business. If you need any assistance or have any questions, feel free to reach out to our support team. We're here to help you succeed!
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- End Welcome -->
+
+        <!-- Vendor Stats -->
+        <section class="bsb-fact-5 py-3">
+            <div class="container">
+                <div class="row justify-content-md-center">
+                    <div class="col-12 col-md-10 col-lg-8 col-xl-7">
+                        <h3 class="fs-5 mb-2 text-secondary text-center text-uppercase">Our Success</h3>
+                        <h2 class="display-5 mb-5 mb-xl-9 text-center">We have a proven track record of success.</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="container-fluid bg-light border shadow">
+                            <div class="row">
+                                <div class="col-12 col-md-4 p-0">
+                                    <div class="card border-0 bg-transparent">
+                                        <div class="card-body text-center p-4 p-xxl-5">
+                                            <h3 class="display-4 fw-bold mb-2">60+</h3>
+                                            <p class="fs-5 mb-0 text-secondary">Finished Projects</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 p-0 border-top border-bottom border-start border-end">
+                                    <div class="card border-0 bg-transparent">
+                                        <div class="card-body text-center p-4 p-xxl-5">
+                                            <h3 class="display-4 fw-bold mb-2">18k+</h3>
+                                            <p class="fs-5 mb-0 text-secondary">Issues Solved</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 p-0">
+                                    <div class="card border-0 bg-transparent">
+                                        <div class="card-body text-center p-4 p-xxl-5">
+                                            <h3 class="display-4 fw-bold mb-2">10k+</h3>
+                                            <p class="fs-5 mb-0 text-secondary">Happy Customers</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <br><br><br><br>
+        <!-- End vendor stats -->
+
+        <!-- Stats -->
+        <div class="header-body">
+            <div class="row">
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Traffic</h5>
+                                    <span class="h2 font-weight-bold mb-0">350,897</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                                <span class="text-nowrap">Since last month</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
+                                    <span class="h2 font-weight-bold mb-0">2,356</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                                        <i class="fas fa-chart-pie"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                                <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span>
+                                <span class="text-nowrap">Since last week</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
+                                    <span class="h2 font-weight-bold mb-0">924</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                                <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
+                                <span class="text-nowrap">Since yesterday</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-6">
+                    <div class="card card-stats mb-4 mb-xl-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
+                                    <span class="h2 font-weight-bold mb-0">49,65%</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                                        <i class="fas fa-percent"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted text-sm">
+                                <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
+                                <span class="text-nowrap">Since last month</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Stats -->
     </div>
 
-</body>
 
-</html>
+
+    <!-- Start Footer -->
+    <br><br><br>
+    <?php include("../inc/footer.php") ?>
+    <!-- End Footer -->

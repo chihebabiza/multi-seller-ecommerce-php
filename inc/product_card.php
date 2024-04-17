@@ -2,7 +2,7 @@
 foreach ($filteredProducts as $product) {
     echo '<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">';
     echo '<a class="product-item mb-3" href="product.html">';
-    echo '<img src="../images/product-1.png"  class="img-fluid product-thumbnail">';
+    echo '<img src="../uploads/' . $product['image'] . '" alt="' . $product['product_name'] . '" class="image img-fluid product-thumbnail">';
     echo '<h3 class="product-title">' . $product['product_name'] . '</h3>';
     echo '<strong class="product-price">$' . $product['price'] . '</strong>';
     echo '</a>';
@@ -21,4 +21,3 @@ foreach ($filteredProducts as $product) {
     echo '</form>';
     echo '</div>';
 }
-?>

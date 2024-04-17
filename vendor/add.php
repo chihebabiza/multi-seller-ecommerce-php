@@ -22,6 +22,8 @@ if (isset($_POST['addProduct'])) {
     $productName = $_POST['productName'];
     $description = $_POST['description'];
     $price = $_POST['price'];
+    $quantity = $_POST['quantity'];
+    $category = $_POST['category'];
 
     // Image upload handling
     $image = ''; // Initialize image variable
@@ -53,35 +55,66 @@ if (isset($_POST['addProduct'])) {
     $vendorName = $_SESSION['vendorName'];
 
     // Use the registerProduct function
-    registerProduct($productName, $description, $price, $image, $vendorName, $conn);
+    registerProduct($productName, $description, $price, $image, $vendorName, $quantity, $category, $conn);
 }
 
 ?>
+<!-- Start Header/Navigation -->
+<?php include("../inc/header.php") ?>
+<!-- End Header/Navigation -->
 
+<!-- Start Contact Form -->
+<div class="container mt-5">
+    <h2 class="text-center">Add new product</h2>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-8 pb-4">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="text-black" for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="productName" required placeholder="Enter product name">
+                </div>
+                <div class="form-group">
+                    <label for="description" class="text-black">Description</label>
+                    <textarea name="description" id="description" cols="30" rows="5" class="form-control" placeholder="Write your description here" required></textarea>
+                </div>
+                <div class="form-group mb-4">
+                    <label class="text-black" for="price">Price</label>
+                    <input type="number" class="form-control" id="price" name="price" required placeholder="Enter product price">
+                </div>
+                <div>
+                    <input class="form-control form-control-lg mb-4" id="formFileLg" type="file" name="image">
+                </div>
+                <div class="form-group">
+                    <label class="text-black" for="quantity">Quantity</label>
+                    <input type="number" class="form-control" id="quantity" name="quantity" required placeholder="Enter product quantity">
+                </div>
+                <div class="form-group">
+                    <label class="text-black" for="category">Category</label>
+                    <select name="category" id="category" class="form-control" required>
+                        <option value="" disabled selected>Select a category</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Home & Garden">Home & Garden</option>
+                        <option value="Books, Movies & Music">Books, Movies & Music</option>
+                        <option value="Collectibles & Antiques">Collectibles & Antiques</option>
+                        <option value="Sports & Outdoors">Sports & Outdoors</option>
+                        <option value="Toys & Games">Toys & Games</option>
+                        <option value="Health & Beauty">Health & Beauty</option>
+                        <option value="Automotive">Automotive</option>
+                        <option value="Miscellaneous">Miscellaneous</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <br>
+                <input type="submit" class="btn btn-primary w-100" name="addProduct" value="Add Product">
+            </form>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br>
+<!-- End Contact Form -->
 
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <form style="text-align: center;" method="post" action="">
-        <h1>Add Product</h1><br><br>
-        <label>Product Name</label>
-        <input type="text" name="productName"><br><br>
-        <label>Description</label>
-        <textarea name="description"></textarea><br><br>
-        <label>Price</label>
-        <input type="text" name="price"><br><br>
-        <label>Image</label>
-        <input type="file" name="image"><br><br>
-        <input type="submit" name="addProduct" value="Add Product">
-    </form>
-</body>
-
-</html>
+<!-- Start Footer Section -->
+<?php include("../inc/footer.php") ?>
+<!-- End Footer Section -->

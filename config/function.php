@@ -17,7 +17,7 @@ function login($email, $password, $conn)
                     $_SESSION['vendor_id'] = $row['vendor_id'];
                     $_SESSION['vendorName'] = $row['vendor_name'];
                     $_SESSION['points'] = $row['points'];
-                    header("Location: ../vendor/vendor.php");
+                    header("Location: index.php");
                     exit();
                 } elseif ($role == 'admin') {
                     $_SESSION['admin_logged_in'] = true;
@@ -67,20 +67,29 @@ function register($firstName, $lastName, $email, $password, $conn)
     }
 }
 
-
-
-
 function registerProduct($productName, $description, $price, $image, $vendorName, $quantity, $category, $conn)
 {
-    // SQL query to insert product into database
-    $sql = "INSERT INTO product (product_name, description, price, image, status, create_date, update_date, seller_name, quantity, category) 
-            VALUES ('$productName', '$description', $price, '$image', 'awaiting', NOW(), NOW(), '$vendorName', $quantity, '$category')";
+    // Check if image upload was successful
+    if ($image !== '' && file_exists('../uploads/' . $image)) {
+        // SQL query to insert product into database
+        $sql = "INSERT INTO product (product_name, description, price, image, status, create_date, update_date, seller_name, quantity, category) 
+                VALUES ('$productName', '$description', $price, '$image', 'awaiting', NOW(), NOW(), '$vendorName', $quantity, '$category')";
 
-    // Execute the query
-    if (mysqli_query($conn, $sql)) {
-        echo "Product added successfully.";
+        // Execute the query
+        if (mysqli_query($conn, $sql)) {
+            echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Product added successfully.
+                  </div>';
+        } else {
+            echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Error adding product to the database: ' . mysqli_error($conn) . '
+                  </div>';
+        }
     } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        // Image upload failed or no image was selected
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                Error uploading image or no image selected.
+              </div>';
     }
 }
 
@@ -163,16 +172,16 @@ function getProductsByVendorName($vendorName, $conn)
 }
 
 
-function updateProduct($productId, $productName, $description, $price, $image, $conn)
+function updateProduct($productId, $productName, $description, $price, $image, $quantity, $category, $conn)
 {
     // SQL query to update the product
-    $sql = "UPDATE product SET product_name = ?, description = ?, price = ?, image = ?, update_date = NOW() WHERE product_id = ?";
+    $sql = "UPDATE product SET product_name = ?, description = ?, price = ?, image = ?, quantity = ?, category = ?, update_date = NOW() WHERE product_id = ?";
 
     // Prepare the statement
     $stmt = $conn->prepare($sql);
 
     // Bind parameters
-    $stmt->bind_param("ssdsi", $productName, $description, $price, $image, $productId);
+    $stmt->bind_param("ssdsisi", $productName, $description, $price, $image, $quantity, $category, $productId);
 
     // Execute the statement
     if ($stmt->execute()) {

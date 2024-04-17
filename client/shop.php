@@ -53,79 +53,58 @@ if (isset($_GET['category'])) {
 }
 
 ?>
-<!doctype html>
-<html lang="en">
+<style>
+	.image {
+		height: 300px;
+		object-fit: contain;
+	}
+</style>
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="author" content="Untree.co">
-	<link rel="shortcut icon" href="favicon.png">
+<!-- Start Header/Navigation -->
+<?php include("../inc/header.php") ?>
+<!-- End Header/Navigation -->
 
-	<meta name="description" content="" />
-	<meta name="keywords" content="bootstrap, bootstrap4" />
-
-	<!-- Bootstrap CSS -->
-	<link href="../css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-	<link href="../css/tiny-slider.css" rel="stylesheet">
-	<link href="../css/style.css" rel="stylesheet">
-	<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
-</head>
-
-<body>
-
-	<!-- Start Header/Navigation -->
-	<?php include("../inc/header.php") ?>
-	<!-- End Header/Navigation -->
-
-	<!-- Start Filter Categories -->
-	<div class="container">
-		<br>
-		<div class="row justify-content-between align-items-end">
-			<form action="" method="get" class="w-100 d-flex">
-				<div class="form-floating flex-grow-1 me-2 mb-0">
-					<select class="form-select w-100" id="category" name="category" aria-label="Select Category">
-						<option value="">All Categories</option>
-						<?php
-						foreach ($categories as $category) {
-							$selected = ($category == $selectedCategory) ? 'selected' : '';
-							echo '<option value="' . $category . '" ' . $selected . '>' . $category . '</option>';
-						}
-						?>
-					</select>
-					<label for="categoryFilter">Select Category</label>
-				</div>
-				<button type="submit" class="btn btn-primary">Apply</button>
-			</form>
-		</div>
-	</div>
-	<!-- End Filter Categories -->
-
-	<!-- Add Display Products -->
-	<div class="untree_co-section product-section before-footer-section">
-		<div class="container">
-			<div class="row">
-				<?php include("../inc/product_card.php") ?>
+<!-- Start Filter Categories -->
+<div class="container">
+	<br>
+	<div class="row justify-content-between align-items-end">
+		<form action="" method="get" class="w-100 d-flex">
+			<div class="form-floating flex-grow-1 me-2 mb-0">
+				<select class="form-select w-100" id="category" name="category" aria-label="Select Category">
+					<option value="">All Categories</option>
+					<?php
+					foreach ($categories as $category) {
+						$selected = ($category == $selectedCategory) ? 'selected' : '';
+						echo '<option value="' . $category . '" ' . $selected . '>' . $category . '</option>';
+					}
+					?>
+				</select>
+				<label for="categoryFilter">Select Category</label>
 			</div>
+			<button type="submit" class="btn btn-primary">Apply</button>
+		</form>
+	</div>
+</div>
+<!-- End Filter Categories -->
+
+<!-- Add Display Products -->
+<div class="untree_co-section product-section before-footer-section">
+	<div class="container">
+		<div class="row">
+			<?php include("../inc/product_card.php") ?>
 		</div>
 	</div>
-	<!-- End Display Products -->
+</div>
+<!-- End Display Products -->
 
-	<!-- Start Footer Section -->
-	<?php include("../inc/footer.php") ?>
-	<!-- End Footer Section -->
+<!-- Start Footer Section -->
+<?php include("../inc/footer.php") ?>
+<!-- End Footer Section -->
 
-	<script src="../js/bootstrap.bundle.min.js"></script>
-	<script src="../js/tiny-slider.js"></script>
-	<script src="../js/custom.js"></script>
-	<script>
-		// Get the <li> element with the ID "contact"
-		var contactLi = document.getElementById('shop');
+<script>
+	// Get the <li> element with the ID "contact"
+	var contactLi = document.getElementById('shop');
 
-		// Add classes "nav-item" and "active" to the <li> element
-		contactLi.classList.add('nav-item', 'active');
-	</script>
-</body>
-
-</html>
+	// Add classes "nav-item" and "active" to the <li> element
+	contactLi.classList.add('nav-item', 'active');
+</script>

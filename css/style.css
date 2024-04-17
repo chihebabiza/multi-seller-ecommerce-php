@@ -5,6 +5,11 @@ body {
   position: relative;
 }
 
+.image {
+  height: 300px;
+  object-fit: contain;
+}
+
 body {
   font-family: "Inter", sans-serif;
   font-weight: 400;
