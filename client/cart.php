@@ -23,7 +23,7 @@ if (isset($_POST['remove_product'])) {
 }
 
 ?>
-
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -36,11 +36,11 @@ if (isset($_POST['remove_product'])) {
 	<meta name="keywords" content="bootstrap, bootstrap4" />
 
 	<!-- Bootstrap CSS -->
-	<link href="../css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 	<link href="../css/tiny-slider.css" rel="stylesheet">
 	<link href="../css/style.css" rel="stylesheet">
-	<title>Furni Free Bootstrap 5 Template for Furniture and Interior Design Websites by Untree.co </title>
+	<title>My Cart</title>
 </head>
 
 <body>
@@ -176,13 +176,6 @@ if (isset($_POST['remove_product'])) {
 	<!-- Start Footer Section -->
 	<?php include("../inc/footer.php") ?>
 	<!-- End Footer Section -->
-
-	<script src="../js/bootstrap.bundle.min.js"></script>
-	<script src="../js/tiny-slider.js"></script>
-	<script src="../js/custom.js"></script>
-</body>
-
-</html>
 <?php
 				}
 ?>
