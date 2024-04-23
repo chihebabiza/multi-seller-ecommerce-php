@@ -16,6 +16,24 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/dash.css" rel="stylesheet">
     <title>BRICO DZ</title>
+    <style>
+        .cart-number {
+            width: 20px;
+            position: absolute;
+            height: 20px;
+            line-height: 20px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 13px;
+            background-color: #ff4500;
+            color: #ffffff;
+        }
+
+        .product-img {
+            height: 300px;
+            object-fit: contain;
+        }
+    </style>
 </head>
 
 <body>
@@ -33,7 +51,13 @@
                     <li id="contact"><a class="nav-link" href="/project/contact.php">Contact us</a></li>
                 </ul>
                 <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5 d-flex align-items-center">
-                    <li class="me-3"><a class="nav-link" href="/project/vendor/add.php"><i class="fas fa-circle-plus fs-4 text-white"></i></a></li>
+                    <li class="me-3">
+                        <span class="cart-number" id="cartCount"><?php echo getVendorPoints($vendorName, $conn); ?></span>
+                        <a class="nav-link" href="/project/vendor/convert.php">
+                            <i class="fas fa-heart fs-4 text-white">
+                            </i>
+                        </a>
+                    </li>
                     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -42,7 +66,6 @@
                                 <li><a class="dropdown-item" href="/project/vendor/dashboard.php">Dashboard</a></li>
                                 <li><a class="dropdown-item" href="/project/vendor/orders.php">Orders</a></li>
                                 <li><a class="dropdown-item" href="/project/vendor/annoucements.php">Announcements</a></li>
-                                <li><a class="dropdown-item" href="/project/vendor/profile.php">Profile</a></li>
                                 <li><a class="dropdown-item" href="/project/vendor/logout.php">Log out</a></li>
                             </ul>
                         </li>

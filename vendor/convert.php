@@ -13,15 +13,19 @@ $vendorName = $_SESSION['vendorName'];
 $points = getVendorPoints($vendorName, $conn);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Add vendor's points to their balance (you might adjust this logic)
     $balanceToAdd = $points;
     addBalanceToVendor($vendorName, $balanceToAdd, $conn);
 
+    // Reset vendor's points to zero
     resetVendorPoints($vendorName, $conn);
 
-    header("Location: orders.php");
+    // Redirect to orders page or any other page as needed
+    header("Location: dashboard.php");
     exit();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

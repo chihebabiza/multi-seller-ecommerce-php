@@ -11,7 +11,7 @@
             <!-- Start Column 1 -->
             <div class="col-12 col-md-6 col-lg-3 mb-5 mb-md-0">
                 <img src="../images/person_1.jpg" class="img-fluid mb-5">
-                <h3 clas><a href="#"><span class="">Lawson</span> Arnold</a></h3>
+                <h3 clas><a href="#"><span class="">Chiheb</span> Abiza</a></h3>
                 <span class="d-block position mb-4">CEO, Founder, Atty.</span>
                 <p>Separated they live in.
                     Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language
@@ -23,7 +23,7 @@
             <div class="col-12 col-md-6 col-lg-3 mb-5 mb-md-0">
                 <img src="../images/person_2.jpg" class="img-fluid mb-5">
 
-                <h3 clas><a href="#"><span class="">Jeremy</span> Walker</a></h3>
+                <h3 clas><a href="#"><span class="">Kerour</span> Amine</a></h3>
                 <span class="d-block position mb-4">CEO, Founder, Atty.</span>
                 <p>Separated they live in.
                     Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language

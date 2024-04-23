@@ -1,3 +1,18 @@
+<?php
+
+session_start();
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+// Include database connection and other necessary files
+include("../config/connect.php");
+include("../config/function.php");
+// Check if cart data exists in session, initialize if not
+if (!isset($_SESSION['cart'])) {
+	$_SESSION['cart'] = [];
+}
+$conn->close();
+?>
 <!-- Start Header/Navigation -->
 <?php include("../inc/header.php") ?>
 <!-- End Header/Navigation -->

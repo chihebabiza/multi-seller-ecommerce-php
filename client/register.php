@@ -5,16 +5,27 @@ ini_set('display_errors', 1);
 include("../config/connect.php");
 include("../config/function.php");
 
-if (isset($_POST['register'])) {
-	$firstName = $_POST['firstName'];
-	$lastName = $_POST['lastName'];
-	$email = $_POST['email'];
-	$password = $_POST['password'];
-	register($firstName, $lastName, $email, $password, $conn); // Pass $conn as the last argument
+// Start session
+session_start();
+
+// Check if cart data exists in session, initialize if not
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
 }
 
+// Check if the registration form is submitted
+if (isset($_POST['register'])) {
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    register($firstName, $lastName, $email, $password, $conn); // Pass $conn as the last argument
+}
+
+// Close the database connection
 $conn->close();
 ?>
+
 
 <!-- Start Header/Navigation -->
 <?php include("../inc/header.php") ?>

@@ -15,6 +15,7 @@ if (isset($_POST['submit_vendor'])) {
         mysqli_query($conn, $sql);
     }
     echo "Vendor status updated successfully!";
+    header("Location: users.php");
 }
 
 mysqli_close($conn);

@@ -408,11 +408,20 @@ function getCurrentProductQuantity($productId, $conn)
     $stmt->bind_param("i", $productId);
     $stmt->execute();
     $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    $currentQuantity = $row['quantity'];
+
+    // Check if the query returned any rows
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $currentQuantity = $row['quantity'];
+    } else {
+        // If no rows were returned, set quantity to null or any other appropriate value
+        $currentQuantity = null;
+    }
+
     $stmt->close();
     return $currentQuantity;
 }
+
 
 // Function to retrieve the quantity of a cancelled order based on its order ID
 function getOrderQuantity($orderId, $conn)
@@ -426,16 +435,6 @@ function getOrderQuantity($orderId, $conn)
     $cancelledOrderQuantity = $row['quantity'];
     $stmt->close();
     return $cancelledOrderQuantity;
-}
-
-function updateVendorPoints($vendorName, $points, $conn)
-{
-    // Prepare and execute SQL query to update vendor points
-    $sql = "UPDATE vendor SET points = ? WHERE vendor_name = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("is", $points, $vendorName);
-    $stmt->execute();
-    $stmt->close();
 }
 
 function getVendorBalance($vendorName, $conn)
@@ -505,3 +504,138 @@ function getVendorPoints($vendorName, $conn)
         return 0;
     }
 }
+
+function getVendorTotalShippedOrders($vendorName, $conn)
+{
+    // SQL query to get the total order value for a specific vendor where the status is 'shipped'
+    $sql = "SELECT SUM(quantity * price) AS total_amount FROM orders WHERE seller = ? AND status = 'shipped'";
+
+    // Prepare the SQL statement
+    $stmt = $conn->prepare($sql);
+
+    // Bind parameters
+    $stmt->bind_param("s", $vendorName);
+
+    // Execute the query
+    $stmt->execute();
+
+    // Get the result
+    $result = $stmt->get_result();
+
+    // Fetch the row
+    $row = $result->fetch_assoc();
+
+    // Close the statement
+    $stmt->close();
+
+    // Return the total amount
+    return $row['total_amount'];
+}
+
+// Function to get shipped orders
+function getShippedOrders($conn)
+{
+    $sql = "SELECT COUNT(*) as shipped_orders FROM orders WHERE status = 'shipped'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['shipped_orders'];
+    } else {
+        return 0;
+    }
+}
+
+// Function to get cancelled orders
+function getCancelledOrders($conn)
+{
+    $sql = "SELECT COUNT(*) as cancelled_orders FROM orders WHERE status = 'cancelled'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['cancelled_orders'];
+    } else {
+        return 0;
+    }
+}
+
+// Function to get all orders
+function getAllOrders($conn)
+{
+    $sql = "SELECT COUNT(*) as all_orders FROM orders";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['all_orders'];
+    } else {
+        return 0;
+    }
+}
+
+// Function to get pending orders
+function getPendingOrders($conn)
+{
+    $sql = "SELECT COUNT(*) as pending_orders FROM orders WHERE status = 'pending'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['pending_orders'];
+    } else {
+        return 0;
+    }
+}
+
+function addVendorPoints($vendorName, $pointsToAdd, $conn)
+{
+    // Retrieve current points for the vendor
+    $currentPoints = getVendorPoints($vendorName, $conn);
+
+    // Calculate new points by adding pointsToAdd
+    $newPoints = $currentPoints + $pointsToAdd;
+
+    // Update vendor points in the database
+    $sql = "UPDATE vendor SET points = ? WHERE vendor_name = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $newPoints, $vendorName);
+    $stmt->execute();
+
+    // Check for errors or successful execution
+    if ($stmt->affected_rows > 0) {
+        // Return new points if update was successful
+        return $newPoints;
+    } else {
+        // Return false or handle the error accordingly
+        return false;
+    }
+}
+
+// Function to calculate the number of users
+function countUsers($conn)
+{
+    $sql = "SELECT COUNT(*) AS total_users FROM vendor";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    return $row['total_users'];
+}
+
+// Function to calculate the number of products
+function countProducts($conn)
+{
+    $sql = "SELECT COUNT(*) AS total_products FROM product";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    return $row['total_products'];
+}
+
+// Function to calculate the number of orders
+function countOrders($conn)
+{
+    $sql = "SELECT COUNT(*) AS total_orders FROM orders";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    return $row['total_orders'];
+}
+
+// Example usage:
+// $totalUsers = countUsers($conn);
+// $totalProducts = countProducts($conn);
+// $totalOrders = countOrders($conn);
