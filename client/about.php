@@ -12,10 +12,12 @@ if (!isset($_SESSION['cart'])) {
 	$_SESSION['cart'] = [];
 }
 $conn->close();
-?>
-<!-- Start Header/Navigation -->
-<?php include("../inc/header.php") ?>
-<!-- End Header/Navigation -->
+
+// include the head
+include("../inc/head.php");
+
+// include the header
+include("../inc/header.php") ?>
 
 <!-- Start Hero Section -->
 <div class="hero">
@@ -23,10 +25,11 @@ $conn->close();
 		<div class="row justify-content-between">
 			<div class="col-lg-5">
 				<div class="intro-excerpt">
-					<h1>About Us</h1>
-					<p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam
-						vulputate velit imperdiet dolor tempor tristique.</p>
-					<p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
+					<h1>About Us</h1><br>
+					<p class="mb-4">Our online platform is designed to simplify the process of buying and selling replacement parts across a multitude of sectors. From automotive to electronics, appliances to informatics, we offer a comprehensive range of high-quality parts sourced from trusted suppliers. No matter how intricate or obscure the component you're searching for, chances are, you'll find it here at BricoDZ.</p>
+					<br><br>
+					<p><a href="shop.php" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
+					<br>
 				</div>
 			</div>
 			<div class="col-lg-7">
