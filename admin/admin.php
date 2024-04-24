@@ -9,27 +9,30 @@ if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: ../client/index.php");
     exit();
 }
+
 $totalUsers = countUsers($conn);
 $totalProducts = countProducts($conn);
 $totalOrders = countOrders($conn);
-?>
 
-<!-- Start Header/Navigation -->
-<?php include("../inc/header.php") ?>
-<!-- End Header/Navigation -->
+// Include the head
+include("../inc/head.php");
+
+// Include the header
+include("../inc/header.php");
+?>
 
 <div class="container">
     <!-- Start Welcome -->
     <div class="py-5 mb-2 lc-block">
         <div class="lc-block">
-            <div editable="rich">
-                <h2 class="fw-bolder display-5">Welcome Admin</h2>
+            <div editable="rich"><br>
+                <h2 class="fw-bolder display-5">Welcome Admin</h2><br>
             </div>
         </div>
         <div class="lc-block col-md-8">
             <div editable="rich">
                 <p class="lead">Welcome to your dashboard, Admin! This is your central hub for managing users and announcements. Here, you can efficiently oversee user accounts, update information, and ensure smooth operations. Additionally, you have the power to create and distribute announcements to keep your community informed and engaged!
-                </p>
+                </p><br>
             </div>
         </div>
     </div>
@@ -48,7 +51,7 @@ $totalOrders = countOrders($conn);
                                 <span class="h2 font-weight-bold mb-0"><?php echo countUsers($conn); ?></span>
                             </div>
                             <div class="col-auto">
-                                <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                <div class="icon icon-shape bg-success text-white rounded-circle shadow">
                                     <i class="fa-solid fa-users"></i>
                                 </div>
                             </div>
@@ -94,11 +97,10 @@ $totalOrders = countOrders($conn);
             </div>
         </div>
     </div>
-    <br><br><br>
     <!-- End Stats -->
 </div>
 
 <!-- Start Footer -->
-<br><br><br>
+<br><br><br><br><br><br><br>
 <?php include("../inc/footer.php") ?>
 <!-- End Footer -->
