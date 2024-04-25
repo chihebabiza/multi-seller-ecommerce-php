@@ -12,10 +12,12 @@ if (!isset($_SESSION['cart'])) {
 	$_SESSION['cart'] = [];
 }
 $conn->close();
-?>
-<!-- Start Header/Navigation -->
-<?php include("../inc/header.php") ?>
-<!-- End Header/Navigation -->
+
+// include the head
+include("../inc/head.php");
+
+// include the header
+include("../inc/header.php") ?>
 
 <!-- Start Hero Section -->
 <div class="hero">
@@ -23,10 +25,11 @@ $conn->close();
 		<div class="row justify-content-between">
 			<div class="col-lg-5">
 				<div class="intro-excerpt">
-					<h1>Contact</h1>
-					<p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam
-						vulputate velit imperdiet dolor tempor tristique.</p>
-					<p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
+					<h1>Contact</h1><br>
+					<p class="mb-4">If you have any questions, inquiries, or feedback, please don't hesitate to reach out to us. Our team is dedicated to providing excellent customer service and will do our best to assist you. You can contact us via phone, email, or by filling out the contact form below. We value your input and look forward to hearing from you.</p>
+					<br><br>
+					<p><a href="shop.php" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
+					<br>
 				</div>
 			</div>
 			<div class="col-lg-7">
@@ -115,7 +118,7 @@ $conn->close();
 							<textarea name="" class="form-control" id="message" cols="30" rows="5"></textarea>
 						</div>
 
-						<button type="submit" class="btn btn-primary-hover-outline">Send Message</button>
+						<button type="submit" class="btn btn-primary">Send Message</button>
 					</form>
 
 				</div>
