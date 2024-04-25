@@ -35,15 +35,10 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 		if (!empty($_SESSION['cart'])) {
 			foreach ($_SESSION['cart'] as $product_id => $product) {
 				// Fetch product details from database
-				$sql = "SELECT product_id, product_name, description, price, image, seller_name, quantity FROM product WHERE product_id = ?";
-				$stmt = $conn->prepare($sql);
-				$stmt->bind_param("i", $product_id);
-				$stmt->execute();
-				$result = $stmt->get_result();
-				$row = $result->fetch_assoc();
+				$row = getProductDetails($product_id, $conn);
 
 				if ($row) {
-					$product_id = $row['product_id'];
+					$product_id = $row['product_id']; // Use the product ID from the product table
 					$product_name = $row['product_name'];
 					$description = $row['description'];
 					$price = $row['price'];
@@ -55,11 +50,7 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 					$status = "pending";
 
 					// Insert order into the database
-					$sql = "INSERT INTO orders (product_id, name, description, price, image, seller, client_name, city, wilaya, phone, order_date, quantity, status) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
-					$stmt = $conn->prepare($sql);
-					$stmt->bind_param("isssssssssis", $product_id, $product_name, $description, $price, $image, $seller_name, $client_name, $city, $wilaya, $phone, $quantity, $status);
-					$stmt->execute();
+					insertOrder($product_id, $product_name, $description, $price, $image, $seller_name, $client_name, $city, $wilaya, $phone, $quantity, $status, $conn);
 
 					// Update vendor points
 					$pointsToAdd = 5 * $quantity;
@@ -67,7 +58,6 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 				}
 			}
 		}
-		updateQuantity($product_id, $quantity, $status, $conn);
 
 		// Clear the cart after placing the order
 		unset($_SESSION['cart']);
@@ -77,10 +67,12 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 		exit();
 	}
 }
-?>
-<!-- Start Header/Navigation -->
-<?php include("../inc/header.php") ?>
-<!-- End Header/Navigation -->
+
+// include the head
+include("../inc/head.php");
+
+// include the header
+include("../inc/header.php") ?>
 
 <!-- Start Form -->
 <div class="untree_co-section">
@@ -139,7 +131,7 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 							<textarea name="c_order_notes" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="Write your notes here..."></textarea>
 						</div>
 						<div class="form-group">
-							<input class="btn btn-black btn-lg py-3 btn-block" type="submit" value="Place Order">
+							<input class="btn btn-primary btn-lg py-3 btn-block" type="submit" value="Place Order">
 						</div>
 					</form>
 				</div>
@@ -156,7 +148,7 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 							<div class="input-group w-75 couponcode-wrap">
 								<input type="text" class="form-control me-2" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2">
 								<div class="input-group-append">
-									<button class="btn btn-black btn-sm" type="button" id="button-addon2">Apply</button>
+									<button class="btn btn-primary btn-sm" type="button" id="button-addon2">Apply</button>
 								</div>
 							</div>
 
@@ -221,19 +213,9 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 </div>
 <!-- End Form -->
 
-<!-- Start Footer Section -->
-<?php include("../inc/footer.php") ?>
-<!-- End Footer Section -->
-
 <?php
-function resetCart()
-{
-	if (isset($_SESSION['cart'])) {
-		unset($_SESSION['cart']); // Unset the cart session variable
-		// Alternatively, you can destroy the entire session using session_destroy()
-		// session_destroy();
-	}
-}
+// include footer
+include("../inc/footer.php");
 
 // Check if the reset button is clicked
 if (isset($_POST['reset_cart'])) {
