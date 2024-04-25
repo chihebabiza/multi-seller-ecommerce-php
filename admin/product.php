@@ -1,0 +1,171 @@
+<?php
+session_start();
+
+// include the connect.php and function.php
+include("../config/connect.php");
+include("../config/function.php");
+
+// Check if the admin is logged in, if not, redirect to login page
+if (!isset($_SESSION['admin_logged_in'])) {
+	header("Location: ../client/index.php");
+	exit();
+}
+
+// Check if product_id is provided in the URL
+if (isset($_GET['product_id'])) {
+	$product_id = $_GET['product_id'];
+
+	// Fetch product details based on product_id
+	$product = getProductDetails($conn, $product_id);
+
+	if (!$product) {
+		// Product not found, you can handle this case accordingly
+		echo "Product not found!";
+		exit;
+	}
+} else {
+	// If product_id is not provided in the URL, redirect to index.php or handle it accordingly
+	header("Location: index.php");
+	exit;
+}
+?>
+
+<!-- Header -->
+<?php include("../inc/head.php"); ?>
+<?php include("../inc/header.php"); ?>
+
+<!-- Content -->
+<style>
+	.icon-hover:hover {
+		border-color: #3b71ca !important;
+		background-color: white !important;
+		color: #3b71ca !important;
+	}
+
+	.icon-hover:hover i {
+		color: #3b71ca !important;
+	}
+
+	.nav-tabs .nav-item .nav-link:not(.active) {
+		color: #6c757d;
+		/* Change the color as needed */
+		background-color: transparent;
+		/* Remove the background color */
+		border-color: transparent;
+		/* Remove the border color */
+	}
+</style>
+<section class="py-5">
+	<div class="container">
+		<div class="row gx-5">
+			<aside class="col-lg-6">
+				<div class="border rounded-4 mb-3 d-flex justify-content-center">
+					<a data-fslightbox="mygallery" class="rounded-4" target="_blank" data-type="image" href="<?php echo $product['image']; ?>">
+						<img style="max-width: 100%; max-height: 70vh; margin: auto;" class="rounded-4 fit" src="../uploads/<?php echo $product['image']; ?>" alt="<?php echo $product['product_name']; ?>" />
+					</a>
+				</div>
+			</aside>
+			<main class="col-lg-6">
+				<div class="ps-lg-3">
+					<h4 class="title text-dark">
+						<?php echo $product['product_name']; ?>
+					</h4>
+					<!-- Remaining HTML content -->
+					<!-- Star ratings and orders count -->
+					<div class="text-warning mb-1 me-2">
+						<i class="fa fa-star"></i>
+						<i class="fa fa-star"></i>
+						<i class="fa fa-star"></i>
+						<i class="fa fa-star"></i>
+						<i class="fas fa-star-half-alt"></i>
+						<span class="ms-1">4.5</span>
+					</div>
+					<span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><?php echo $product['quantity']; ?> items in stock</span>
+					<span class="text-success ms-2">In stock</span>
+					<!-- Product price -->
+					<div class="mb-3">
+						<span class="h5"><?php echo $product['price']; ?> DZD</span>
+					</div>
+
+					<p>
+						<?php echo $product['description']; ?>
+					</p>
+
+					<div class="row">
+						<!-- Product details -->
+						<dt class="col-3">Name:</dt>
+						<dd class="col-9"><?php echo $product['product_name']; ?></dd>
+
+						<dt class="col-3">Date Created:</dt>
+						<dd class="col-9"><?php echo $product['create_date']; ?></dd>
+
+						<dt class="col-3">Category:</dt>
+						<dd class="col-9"><?php echo $product['category']; ?></dd>
+
+						<dt class="col-3">Seller Name:</dt>
+						<dd class="col-9"><?php echo $product['seller_name']; ?></dd>
+					</div>
+
+					<hr />
+				</div>
+			</main>
+		</div>
+	</div>
+</section>
+
+<!-- Seller Profile Section -->
+<section class="py-5 bg-white">
+	<div class="container">
+		<div class="row gx-4">
+			<div class="col-lg-12 mb-4">
+				<div class="border rounded-2 px-4 py-3">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" id="myTab" role="tablist">
+						<li class="nav-item" role="presentation">
+							<a class="nav-link active" id="specification-tab" data-bs-toggle="tab" href="#specification" role="tab" aria-controls="specification" aria-selected="true">Specification</a>
+						</li>
+						<li class="nav-item" role="presentation">
+							<a class="nav-link" id="seller-profile-tab" data-bs-toggle="tab" href="#seller-profile" role="tab" aria-controls="seller-profile" aria-selected="false">Seller Profile</a>
+						</li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content mt-3" id="myTabContent">
+						<div class="tab-pane fade show active" id="specification" role="tabpanel" aria-labelledby="specification-tab">
+							<p>
+								<?php echo $product['description']; ?>
+							</p>
+						</div>
+						<div class="tab-pane fade mb-2" id="seller-profile" role="tabpanel" aria-labelledby="seller-profile-tab">
+							<?php
+							// Fetch seller information
+							$sellerInfo = getSellerInfo($conn, $product['seller_name']);
+							if ($sellerInfo) : ?>
+								<!-- Display seller information -->
+								<ul class="list-group">
+									<li class="list-group-item">
+										<span class="fw-bold">Seller Name:</span> <?php echo $sellerInfo['vendor_name']; ?>
+									</li>
+									<li class="list-group-item">
+										<span class="fw-bold">Seller Email:</span> <?php echo $sellerInfo['vendor_email']; ?>
+									</li>
+									<li class="list-group-item">
+										<span class="fw-bold">Register Date:</span> <?php echo $sellerInfo['register_date']; ?>
+									</li>
+									<li class="list-group-item">
+										<span class="fw-bold">Total Orders:</span> <?php echo getVendorOrders($conn, $sellerInfo['vendor_name']); ?>
+									</li>
+								</ul>
+							<?php else : ?>
+								<p>Seller information not found.</p>
+							<?php endif; ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br><br><br><br><br>
+</section>
+
+<!-- Footer -->
+<?php include("../inc/footer.php"); ?>
