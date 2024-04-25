@@ -23,20 +23,12 @@
 
                                     <div class="testimonial-block text-center">
                                         <blockquote class="mb-5">
-                                            <p>&ldquo;Donec facilisis quam ut purus rutrum lobortis. Donec vitae
-                                                odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam
-                                                vulputate velit imperdiet dolor tempor tristique. Pellentesque
-                                                habitant morbi tristique senectus et netus et malesuada fames ac
-                                                turpis egestas. Integer convallis volutpat dui quis
-                                                scelerisque.&rdquo;</p>
+                                            <p>&ldquo;BricoDZ made finding the right replacement part a breeze! I was struggling to locate a specific component for my car, but their extensive inventory had exactly what I needed. The ordering process was simple, and the part arrived promptly. Thanks to BricoDZ, my vehicle is back on the road, and I couldn't be happier.&rdquo;</p>
                                         </blockquote>
 
                                         <div class="author-info">
-                                            <div class="author-pic">
-                                                <img src="../images/person-1.png" alt="Maria Jones" class="img-fluid">
-                                            </div>
-                                            <h3 class="font-weight-bold">Maria Jones</h3>
-                                            <span class="position d-block mb-3">CEO, Co-Founder, XYZ Inc.</span>
+                                            <h3 class="font-weight-bold">Aimen Haddad</h3>
+                                            <span class="position d-block mb-3">Automotive Enthusiast</span>
                                         </div>
                                     </div>
 
@@ -51,20 +43,12 @@
 
                                     <div class="testimonial-block text-center">
                                         <blockquote class="mb-5">
-                                            <p>&ldquo;Donec facilisis quam ut purus rutrum lobortis. Donec vitae
-                                                odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam
-                                                vulputate velit imperdiet dolor tempor tristique. Pellentesque
-                                                habitant morbi tristique senectus et netus et malesuada fames ac
-                                                turpis egestas. Integer convallis volutpat dui quis
-                                                scelerisque.&rdquo;</p>
+                                            <p>&ldquo;As a professional technician, I rely on BricoDZ for all my repair needs. Their vast selection of high-quality parts, coupled with their excellent customer service, sets them apart from the rest. Whether I'm working on appliances or electronics, I know I can trust BricoDZ to deliver reliable solutions every time.&rdquo;</p>
                                         </blockquote>
 
                                         <div class="author-info">
-                                            <div class="author-pic">
-                                                <img src="../images/person-1.png" alt="Maria Jones" class="img-fluid">
-                                            </div>
-                                            <h3 class="font-weight-bold">Maria Jones</h3>
-                                            <span class="position d-block mb-3">CEO, Co-Founder, XYZ Inc.</span>
+                                            <h3 class="font-weight-bold">Djaber Boukthir</h3>
+                                            <span class="position d-block mb-3">Certified Technician</span>
                                         </div>
                                     </div>
 
@@ -79,20 +63,12 @@
 
                                     <div class="testimonial-block text-center">
                                         <blockquote class="mb-5">
-                                            <p>&ldquo;Donec facilisis quam ut purus rutrum lobortis. Donec vitae
-                                                odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam
-                                                vulputate velit imperdiet dolor tempor tristique. Pellentesque
-                                                habitant morbi tristique senectus et netus et malesuada fames ac
-                                                turpis egestas. Integer convallis volutpat dui quis
-                                                scelerisque.&rdquo;</p>
+                                            <p>&ldquo;I can't thank BricoDZ enough for their exceptional service! When my laptop suddenly stopped working, I was in a panic. Thankfully, BricoDZ had the exact part I needed to fix it. Their website was easy to navigate, and the ordering process was straightforward. Within days, my laptop was up and running again, thanks to BricoDZ!&rdquo;</p>
                                         </blockquote>
 
                                         <div class="author-info">
-                                            <div class="author-pic">
-                                                <img src="../images/person-1.png" alt="Maria Jones" class="img-fluid">
-                                            </div>
-                                            <h3 class="font-weight-bold">Maria Jones</h3>
-                                            <span class="position d-block mb-3">CEO, Co-Founder, XYZ Inc.</span>
+                                            <h3 class="font-weight-bold">Brahim Mihoubi</h3>
+                                            <span class="position d-block mb-3">IT Professional</span>
                                         </div>
                                     </div>
 
