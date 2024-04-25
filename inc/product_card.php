@@ -4,7 +4,7 @@ foreach ($filteredProducts as $product) {
     echo '<a class="product-item mb-3" href="product.php?product_id=' . $product['product_id'] . '">';
     echo '<img src="../uploads/' . $product['image'] . '" alt="' . $product['product_name'] . '" class="image img-fluid product-thumbnail">';
     echo '<h3 class="product-title">' . $product['product_name'] . '</h3>';
-    echo '<strong class="product-price">$' . $product['price'] . '</strong>';
+    echo '<strong class="product-price">' . $product['price'] . ' DZD</strong>';
     echo '</a>';
     echo '<form method="post" class="quantity-form" id="form_' . $product['product_id'] . '">';
     echo '<input type="hidden" name="product_id" value="' . $product['product_id'] . '">';

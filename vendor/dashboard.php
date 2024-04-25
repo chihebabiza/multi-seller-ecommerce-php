@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 // Redirect to login page if the user is not logged in
 if (!isset($_SESSION['vendorName'])) {
     header("Location: ../client/login.php");
@@ -12,16 +13,16 @@ include("../config/function.php");
 
 // Fetch products for the logged-in vendor by vendor name
 $vendorName = $_SESSION['vendorName'];
+$vendor_id = $_SESSION['vendor_id']; // Assuming vendor_id is stored in session
 $products = getProductsByVendorName($vendorName, $conn);
 $totalShippedAmount = getVendorTotalShippedOrders($vendorName, $conn);
 
-// functions for orders
+// Include the head
+include("../inc/head.php");
 
+// Include the header
+include("../inc/dash.php");
 ?>
-<!-- Start Header/Navigation -->
-<?php include("../inc/dash.php") ?>
-<!-- End Header/Navigation -->
-
 <div class="container mb-5">
     <!-- Start Welcome -->
     <div class="py-5 mb-2 lc-block">
@@ -111,9 +112,9 @@ $totalShippedAmount = getVendorTotalShippedOrders($vendorName, $conn);
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">All Orders</h5>
+                                <h5 class="card-title text-uppercase text-muted mb-0">Vendor Orders</h5>
                                 <br>
-                                <span class="h2 font-weight-bold mb-0"><?php echo getAllOrders($conn); ?></span>
+                                <span class="h2 font-weight-bold mb-0"><?php echo getVendorOrders($conn, $vendorName); ?></span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
@@ -280,8 +281,8 @@ $totalShippedAmount = getVendorTotalShippedOrders($vendorName, $conn);
         </div>
         <br> -->
     <!-- End Stats Announcements -->
-
-    <!-- Start Footer -->
-    <br><br><br>
-    <?php include("../inc/footer.php") ?>
-    <!-- End Footer -->
+</div>
+<!-- Start Footer -->
+<br><br><br>
+<?php include("../inc/footer.php") ?>
+<!-- End Footer -->
