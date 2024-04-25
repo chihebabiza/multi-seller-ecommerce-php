@@ -172,10 +172,39 @@ function getProductsByVendorName($vendorName, $conn)
 }
 
 
+// Function to upload an image and return the image filename
+function uploadImage($file)
+{
+    $targetDir = "../uploads/";
+    $image = uniqid() . '_' . basename($file["name"]);
+    $targetFilePath = $targetDir . $image;
+    $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
+
+    // Check if the file is an actual image
+    $check = getimagesize($file["tmp_name"]);
+    if ($check !== false) {
+        // Allow certain file formats
+        $allowedTypes = array("jpg", "jpeg", "png", "gif");
+        if (in_array($fileType, $allowedTypes)) {
+            // Upload file to server
+            if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
+                return $image; // Return the image filename if upload is successful
+            } else {
+                return ""; // Return empty string if upload fails
+            }
+        } else {
+            return ""; // Return empty string if file type is not allowed
+        }
+    } else {
+        return ""; // Return empty string if file is not an image
+    }
+}
+
+// Function to update product details in the database
 function updateProduct($productId, $productName, $description, $price, $image, $quantity, $category, $conn)
 {
     // SQL query to update the product
-    $sql = "UPDATE product SET product_name = ?, description = ?, price = ?, image = ?, quantity = ?, category = ?, update_date = NOW() WHERE product_id = ?";
+    $sql = "UPDATE product SET product_name = ?, description = ?, price = ?, image = ?, quantity = ?, category = ?, status = 'Awaiting', update_date = NOW() WHERE product_id = ?";
 
     // Prepare the statement
     $stmt = $conn->prepare($sql);
@@ -227,8 +256,6 @@ function getProductById($productId, $conn)
         return null; // Product not found
     }
 }
-
-
 
 function deleteProduct($productId, $conn)
 {
@@ -369,19 +396,13 @@ function changeStatus($orderId, $status, $conn)
         // Fetch the product ID associated with the cancelled order
         $productId = getProductIDByOrderID($orderId, $conn);
 
-        // Fetch the current quantity of the product
-        $currentQuantity = getCurrentProductQuantity($productId, $conn);
-
         // Fetch the quantity of the cancelled order
         $cancelledOrderQuantity = getOrderQuantity($orderId, $conn);
 
-        // Calculate the new quantity after cancellation
-        $newQuantity = $currentQuantity + $cancelledOrderQuantity;
-
         // Update the product quantity in the product table
-        $sql = "UPDATE product SET quantity = ? WHERE product_id = ?";
+        $sql = "UPDATE product SET quantity = quantity + ? WHERE product_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ii", $newQuantity, $productId);
+        $stmt->bind_param("ii", $cancelledOrderQuantity, $productId);
         $stmt->execute();
         $stmt->close();
     }
@@ -738,10 +759,17 @@ function getProductDetails($product_id, $conn)
 // Function to insert order into the database
 function insertOrder($product_id, $product_name, $description, $price, $image, $seller_name, $client_name, $city, $wilaya, $phone, $quantity, $status, $conn)
 {
+    // Insert the order into the orders table
     $sql = "INSERT INTO orders (product_id, name, description, price, image, seller, client_name, city, wilaya, phone, order_date, quantity, status) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("isssssssssis", $product_id, $product_name, $description, $price, $image, $seller_name, $client_name, $city, $wilaya, $phone, $quantity, $status);
+    $stmt->execute();
+
+    // Decrease the quantity in the product table
+    $sql = "UPDATE product SET quantity = quantity - ? WHERE product_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $quantity, $product_id);
     $stmt->execute();
 }
 
@@ -790,4 +818,16 @@ function getRelatedProducts($conn, $product)
     }
 
     return $relatedProducts;
+}
+
+function getStatusColorClass($status)
+{
+    switch ($status) {
+        case 'active':
+            return 'success'; // Bootstrap success color
+        case 'awaiting':
+            return 'warning'; // Bootstrap warning color
+        default:
+            return 'danger'; // Bootstrap danger color for other statuses
+    }
 }

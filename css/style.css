@@ -38,7 +38,7 @@ a.more {
 }
 
 .custom-navbar {
-  background: #3b5d50 !important;
+  background: #0c0347 !important;
   padding-top: 20px;
   padding-bottom: 20px;
 }
@@ -138,7 +138,7 @@ a.more {
 }
 
 .hero {
-  background: #3b5d50;
+  background: #0c0347;
   padding: calc(4rem - 30px) 0 0rem 0;
 }
 
@@ -260,14 +260,10 @@ a.more {
 }
 
 .btn.btn-primary {
-  background: #3b5d50;
-  border-color: #3b5d50;
+  background: #0c0347;
+  border-color: #0c0347;
 }
 
-.btn.btn-primary:hover {
-  background: #314d43;
-  border-color: #314d43;
-}
 
 .btn.btn-secondary {
   color: #2f2f2f;
@@ -399,19 +395,6 @@ a.more {
   position: relative;
 }
 
-.why-choose-section .img-wrap:before {
-  position: absolute;
-  content: "";
-  width: 255px;
-  height: 217px;
-  background-image: url("../images/dots-yellow.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  -webkit-transform: translate(-40%, -40%);
-  -ms-transform: translate(-40%, -40%);
-  transform: translate(-40%, -40%);
-  z-index: -1;
-}
 
 .why-choose-section .img-wrap img {
   border-radius: 20px;
@@ -447,32 +430,6 @@ a.more {
   font-size: 14px;
   line-height: 22px;
   color: #6a6a6a;
-}
-
-.we-help-section {
-  padding: 7rem 0;
-}
-
-.we-help-section .imgs-grid {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (1fr)[27];
-  grid-template-columns: repeat(27, 1fr);
-  position: relative;
-}
-
-.we-help-section .imgs-grid:before {
-  position: absolute;
-  content: "";
-  width: 255px;
-  height: 217px;
-  background-image: url("../images/dots-green.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  -webkit-transform: translate(-40%, -40%);
-  -ms-transform: translate(-40%, -40%);
-  transform: translate(-40%, -40%);
-  z-index: -1;
 }
 
 .we-help-section .imgs-grid .grid {
@@ -531,7 +488,7 @@ a.more {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  border: 2px solid #3b5d50;
+  border: 2px solid #0c0347;
   position: absolute;
   left: 0;
   top: 8px;
@@ -656,7 +613,7 @@ a.more {
 }
 
 .testimonial-slider-wrap #testimonial-nav>span:hover {
-  background: #3b5d50;
+  background: #0c0347;
   color: #ffffff;
 }
 
@@ -713,7 +670,7 @@ a.more {
 
 .testimonial-slider-wrap .tns-nav button:hover:before,
 .testimonial-slider-wrap .tns-nav button.tns-nav-active:before {
-  background-color: #3b5d50;
+  background-color: #0c0347;
 }
 
 .before-footer-section {
@@ -803,7 +760,7 @@ a.more {
 .footer-section .subscription-form h3 {
   font-size: 18px;
   font-weight: 500;
-  color: #3b5d50;
+  color: #0c0347;
 }
 
 .footer-section .subscription-form .form-control {
@@ -817,7 +774,7 @@ a.more {
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
-  border-color: #3b5d50;
+  border-color: #0c0347;
   -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 }
@@ -871,7 +828,7 @@ a.more {
   font-size: 32px;
   font-weight: 500;
   text-decoration: none;
-  color: #3b5d50;
+  color: #0c0347;
 }
 
 .footer-section .custom-social li {
@@ -886,12 +843,12 @@ a.more {
   line-height: 40px;
   display: inline-block;
   background: #dce5e4;
-  color: #3b5d50;
+  color: #0c0347;
   border-radius: 50%;
 }
 
 .footer-section .custom-social li a:hover {
-  background: #3b5d50;
+  background: #0c0347;
   color: #ffffff;
 }
 
@@ -918,7 +875,7 @@ a.more {
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
-  border-color: #3b5d50;
+  border-color: #0c0347;
   -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 }
@@ -951,7 +908,7 @@ a.more {
   height: 50px;
   line-height: 50px;
   text-align: center;
-  background: #3b5d50;
+  background: #0c0347;
   margin-right: 20px;
   color: #ffffff;
 }
@@ -989,7 +946,7 @@ textarea {
 }
 
 .site-blocks-table tbody tr:first-child td {
-  border-top: 1px solid #3b5d50 !important;
+  border-top: 1px solid #0c0347 !important;
 }
 
 .site-blocks-table .btn {
@@ -1014,12 +971,12 @@ textarea {
 }
 
 .text-primary {
-  color: #3b5d50 !important;
+  color: #0c0347 !important;
 }
 
 .thankyou-icon {
   position: relative;
-  color: #3b5d50;
+  color: #0c0347;
 }
 
 .thankyou-icon:before {
@@ -1029,4 +986,16 @@ textarea {
   height: 50px;
   border-radius: 50%;
   background: rgba(59, 93, 80, 0.2);
+}
+
+.cart-number {
+  width: 20px;
+  position: absolute;
+  height: 20px;
+  line-height: 20px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 13px;
+  background-color: #e20026;
+  color: #ffffff;
 }
