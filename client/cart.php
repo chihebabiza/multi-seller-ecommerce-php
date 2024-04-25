@@ -5,27 +5,16 @@ session_start();
 include("../config/connect.php");
 include("../config/function.php");
 
-// Function to remove a product from the cart and restore its quantity
-function removeProduct($product_id, $conn)
-{
-	if (isset($_SESSION['cart'][$product_id])) {
-		$quantity = $_SESSION['cart'][$product_id]['quantity']; // Get the quantity of the product being removed
-
-		// Remove the product from the cart
-		unset($_SESSION['cart'][$product_id]);
-	}
-}
-
 // Check if the remove button is clicked
 if (isset($_POST['remove_product'])) {
 	$product_id = $_POST['product_id'];
 	removeProduct($product_id, $conn);
 }
+// include the head
+include("../inc/head.php");
 
-?>
-<!-- Start Header/Navigation -->
-<?php include("../inc/header.php") ?>
-<!-- End Header/Navigation -->
+// include the header
+include("../inc/header.php") ?>
 
 <!-- Start Cart -->
 <div class="untree_co-section before-footer-section">
@@ -37,7 +26,7 @@ if (isset($_POST['remove_product'])) {
 				echo '<h2>Your cart is empty</h2>
 					<div class="row mb-5">
 					<div class="col-md-6 mb-3 mb-md-0">
-						<br><a href="shop.php"><button class="btn btn-black btn-sm btn-block">Continue Shopping</button></a>
+						<br><a href="shop.php"><button class="btn btn-primary btn-sm btn-block">Continue Shopping</button></a>
 					</div>
 				</div>';
 			} else {
@@ -60,7 +49,7 @@ if (isset($_POST['remove_product'])) {
 								$total_price = 0;
 								foreach ($_SESSION['cart'] as $product_id => $product) {
 									// Fetch product details from database
-									$sql = "SELECT product_name, price FROM product WHERE product_id = ?";
+									$sql = "SELECT product_name, price, image FROM product WHERE product_id = ?";
 									$stmt = $conn->prepare($sql);
 									$stmt->bind_param("i", $product_id);
 									$stmt->execute();
@@ -72,10 +61,11 @@ if (isset($_POST['remove_product'])) {
 										$price = $row['price'];
 										$quantity = $product['quantity'];
 										$total = $price * $quantity;
+										$total_price += $total;
 								?>
 										<tr>
 											<td class="product-thumbnail">
-												<img src="../images/product-1.png" alt="Image" class="img-fluid">
+												<img style="height: 100px;" src="../uploads/<?php echo $row['image']; ?>" alt="<?php echo $product_name; ?>" class="img-thumbnail">
 											</td>
 											<td class="product-name">
 												<h2 class="h5 text-black"><?php echo $product_name; ?></h2>
@@ -106,7 +96,7 @@ if (isset($_POST['remove_product'])) {
 			<div class="col-md-6">
 				<div class="row mb-5">
 					<div class="col-md-6 mb-3 mb-md-0">
-						<a href="shop.php"><button class="btn btn-black btn-sm btn-block">Continue Shopping</button></a>
+						<a href="shop.php"><button class="btn btn-primary btn-sm btn-block">Continue Shopping</button></a>
 					</div>
 				</div>
 				<div class="row">
@@ -118,7 +108,7 @@ if (isset($_POST['remove_product'])) {
 						<input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code">
 					</div>
 					<div class="col-md-5">
-						<button class="btn btn-black">Apply Coupon</button>
+						<button class="btn btn-primary">Apply Coupon</button>
 					</div>
 				</div>
 			</div>
@@ -141,7 +131,7 @@ if (isset($_POST['remove_product'])) {
 
 						<div class="row">
 							<div class="col-md-12">
-								<button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='checkout.php'">Proceed To Checkout</button>
+								<button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='checkout.php'">Proceed To Checkout</button>
 							</div>
 						</div>
 					</div>
@@ -152,9 +142,8 @@ if (isset($_POST['remove_product'])) {
 </div>
 <!-- End Cart -->
 
-<!-- Start Footer Section -->
-<?php include("../inc/footer.php") ?>
-<!-- End Footer Section -->
 <?php
+				// include the footer
+				include("../inc/footer.php");
 			}
 ?>
