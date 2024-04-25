@@ -19,9 +19,9 @@ include("../inc/header.php");
 
 // Display welcome to vendor if he logged in
 if (isset($_SESSION['vendorName'])) {
-	echo '<h2 class="text-center my-3 fw-bolder display-8">Welcome, ';
+	echo '<h4 class="text-center my-3 fw-bolder display-8">Welcome, ';
 	echo $_SESSION['vendorName'];
-	echo '</h2>';
+	echo '</h4>';
 }
 ?>
 <!-- Some styles in Home -->
@@ -61,11 +61,11 @@ if (isset($_SESSION['vendorName'])) {
 		<div class="row justify-content-between">
 			<div class="col-lg-5">
 				<div class="intro-excerpt">
-					<h1>BRICO DZ .. Find Your Missing Piece</span></h1>
+					<h1>BRICO DZ .. Find Your Missing Piece</span></h1><br>
 					<p class="mb-4">BricoDZ Is The Best Place For Your Repair Needs BricoDz is an online platform
 						that allows users to buy and sell replacement parts for various equipment. It offers a wide
 						range of parts for different sectors such as automotive, electronics, appliances,
-						informatics and more...</p>
+						informatics and more...</p><br>
 					<p><a href="shop.php" class="btn btn-secondary me-2">Shop Now</a><a href="about.php" class="btn btn-white-outline">Explore</a></p>
 				</div>
 			</div>
