@@ -29,10 +29,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $orders = getOrdersByVendorName($vendorName, $conn);
 }
+
+// Include the head
+include("../inc/head.php");
+
+// Include the header
+include("../inc/dash.php");
 ?>
-<!-- Start Header/Navigation -->
-<?php include("../inc/dash.php") ?>
-<!-- End Header/Navigation -->
 
 <div class="container mb-5">
     <!-- Start Welcome -->
@@ -93,10 +96,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         </div>
                                 </td>
                                 <td>
-                                    <button class="btn" type="submit">
+                                    <button class="btn btn-primary" type="submit">
                                         <i class="fas fa-save"></i> <!-- Font Awesome save icon -->
                                     </button>
-                                    <a href="view_order.php?order_id=<?php echo $order['order_id']; ?>" class="btn">
+                                    <a class="btn btn-success" href="product.php?product_id=<?php echo $order['product_id']; ?>">
                                         <i class="fas fa-eye"></i> <!-- Font Awesome eye icon -->
                                     </a>
                                     </form>
