@@ -9,18 +9,20 @@ if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: ../client/index.php");
     exit();
 }
-?>
 
-<!-- Start Header/Navigation -->
-<?php include("../inc/header.php") ?>
-<!-- End Header/Navigation -->
+// Include the head
+include("../inc/head.php");
+
+// Include the header
+include("../inc/header.php");
+?>
 
 <div class="container">
     <!-- Start Welcome -->
     <div class="py-5 lc-block">
         <div class="lc-block">
             <div editable="rich">
-                <h2 class="fw-bolder display-5">Welcome Admin</h2>
+                <h2 class="fw-bolder display-5">Welcome Admin</h2><br>
             </div>
         </div>
         <div class="lc-block col-md-8">
@@ -36,68 +38,66 @@ if (!isset($_SESSION['admin_logged_in'])) {
         <h1 class="mt-4">Announcements</h1><br><br>
         <form action="update_status.php" method="post">
             <?php
-            // Include database connection file
             include("../config/connect.php");
 
-            // Fetch products from the database
             $sql = "SELECT * FROM product";
             $result = mysqli_query($conn, $sql);
 
-            // Check if there are any products
             if (mysqli_num_rows($result) > 0) {
-                // Start the HTML table
-                echo "<table class='table align-middle mb-0 bg-white'>";
-                echo "<thead class='bg-light'>";
-                echo "<tr>";
-                echo "<th>Image</th>"; // Empty cell for the image
-                echo "<th>Name</th>";
-                echo "<th>Description</th>";
-                echo "<th>Price</th>";
-                echo "<th>Status</th>";
-                echo "<th>Create Date</th>";
-                echo "<th>Seller Name</th>";
-                echo "<th>Action</th>";
-                echo "</tr>";
-                echo "</thead>";
-                echo "<tbody>";
-
-                // Output data of each row
-                while ($row = mysqli_fetch_assoc($result)) {
-                    echo "<tr>";
-                    echo "<td><img src='../uploads/" . $row['image'] . "' alt='" . $row['product_name'] . "' class='image img-fluid product-thumbnail' style='width: 50px; height: 50px;'></td>";
-                    echo "<td>" . $row["product_name"] . "</td>";
-                    echo "<td class='desc-admin' style='overflow: hidden;'>";
-                    echo "<p style='height: 100px; width: 300px;'>" . $row["description"] . "</p>";
-                    echo "</td>";
-                    echo "<td>" . $row["price"] . "</td>";
-                    echo "<td><select name='product_status[" . $row['product_id'] . "]' class='form-select'>";
-                    echo "<option value='awaiting' " . ($row["status"] == "awaiting" ? "selected" : "") . ">Awaiting</option>";
-                    echo "<option value='active' " . ($row["status"] == "active" ? "selected" : "") . ">Active</option>";
-                    echo "<option value='inactive' " . ($row["status"] == "inactive" ? "selected" : "") . ">Inactive</option>";
-                    echo "</select></td>";
-                    echo "<td>" . $row["create_date"] . "</td>";
-                    echo "<td>" . $row["seller_name"] . "</td>";
-                    // Display Save button to update status and Delete button
-                    echo "<td>";
-                    echo "<button type='submit' name='submit_product' class='btn btn-primary custom-btn'><i class='fas fa-save'></i></button>";
-                    echo "<button type='submit' name='view_product' class='btn btn-info custom-btn' onclick='viewProduct(" . $row['product_id'] . ")'><i class='fas fa-eye'></i></button>";
-                    echo "</td>";
-                    echo "</tr>";
-                }
-
-                echo "</tbody>";
-                echo "</table>";
+            ?>
+                <table class="table align-middle mb-0 bg-white">
+                    <thead class="bg-light">
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Create Date</th>
+                            <th>Seller Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        while ($row = mysqli_fetch_assoc($result)) {
+                        ?>
+                            <tr>
+                                <td><img src="../uploads/<?php echo $row['image']; ?>" alt="<?php echo $row['product_name']; ?>" class="image img-fluid product-thumbnail" style="width: 50px; height: 50px;"></td>
+                                <td><?php echo $row['product_name']; ?></td>
+                                <td class="desc-admin">
+                                    <p style="width: 250px; overflow: hidden;"><?php echo $row['description']; ?></p>
+                                </td>
+                                <td><?php echo $row['price'] . " DZD"; ?></td>
+                                <td>
+                                    <select name="product_status[<?php echo $row['product_id']; ?>]" class="form-select">
+                                        <option value="awaiting" <?php echo ($row['status'] == 'awaiting') ? 'selected' : ''; ?>>Awaiting</option>
+                                        <option value="active" <?php echo ($row['status'] == 'active') ? 'selected' : ''; ?>>Active</option>
+                                        <option value="inactive" <?php echo ($row['status'] == 'inactive') ? 'selected' : ''; ?>>Inactive</option>
+                                    </select>
+                                </td>
+                                <td><?php echo $row['create_date']; ?></td>
+                                <td><?php echo $row['seller_name']; ?></td>
+                                <td>
+                                    <button type="submit" name="submit_product" class="btn btn-primary mx-2"><i class="fas fa-save"></i></button>
+                                    <a href="product.php?product_id=<?php echo $row['product_id']; ?>" class="btn btn-primary"><i class="fas fa-eye"></i></a>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            <?php
             } else {
                 echo "No products found.";
             }
-
-            // Close database connection
             ?>
         </form>
     </div>
 </div>
 
 <!-- Start Footer -->
-<br><br><br><br><br>
+<br><br><br><br><br><br><br>
 <?php include("../inc/footer.php") ?>
 <!-- End Footer -->
