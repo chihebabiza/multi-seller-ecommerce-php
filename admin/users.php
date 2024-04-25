@@ -9,31 +9,33 @@ if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: ../client/index.php");
     exit();
 }
-?>
+// Include the head
+include("../inc/head.php");
 
-<!-- Start Header/Navigation -->
-<?php include("../inc/header.php") ?>
-<!-- End Header/Navigation -->
+// Include the header
+include("../inc/header.php");
+?>
 
 <div class="container">
     <!-- Start Welcome -->
     <div class="py-5 lc-block">
         <div class="lc-block">
-            <div editable="rich">
-                <h2 class="fw-bolder display-5">Welcome Admin</h2>
+            <div editable="rich"><br>
+                <h2 class="fw-bolder display-5">Welcome Admin</h2><br>
             </div>
         </div>
         <div class="lc-block col-md-8">
             <div editable="rich">
                 <p class="lead">Welcome to your dashboard, Admin! This is your central hub for managing users and announcements. Here, you can efficiently oversee user accounts, update information, and ensure smooth operations. Additionally, you have the power to create and distribute announcements to keep your community informed and engaged!
-                </p>
+                </p><br>
             </div>
         </div>
     </div>
     <!-- End Welcome -->
 
+    <!-- Users Table -->
     <div class="container">
-        <h1 class="mt-4">Vendors</h1><br><br>
+        <h1 class="mt-4">Users</h1><br><br>
         <form action="update_vendor_status.php" method="post">
             <div class="table-responsive">
                 <table class="table align-middle mb-0 bg-white">
@@ -59,27 +61,27 @@ if (!isset($_SESSION['admin_logged_in'])) {
                         if (mysqli_num_rows($result) > 0) {
                             // Output data of each row
                             while ($row = mysqli_fetch_assoc($result)) {
-                                echo "<tr>";
-                                echo "<td>" . $row["vendor_name"] . "</td>";
-                                echo "<td>" . $row["vendor_email"] . "</td>";
-                                echo "<td>" . $row["register_date"] . "</td>";
-                                // Display a dropdown for status with options: Active, Inactive
-                                echo "<td><select name='vendor_status[" . $row['vendor_id'] . "]' class='form-select'>";
-                                echo "<option value='active' " . ($row["vendor_status"] == "active" ? "selected" : "") . ">Active</option>";
-                                echo "<option value='inactive' " . ($row["vendor_status"] == "inactive" ? "selected" : "") . ">Inactive</option>";
-                                echo "<option value='awaiting' " . ($row["vendor_status"] == "awaiting" ? "selected" : "") . ">Awaiting</option>";
-                                echo "</select></td>";
-                                // Display password
-                                // Display role, points, and balance
-                                echo "<td>" . $row["role"] . "</td>";
-                                echo "<td>" . $row["points"] . "</td>";
-                                echo "<td>" . $row["balance"] . "</td>";
-                                // Display Save button to update status
-                                echo "<td><button type='submit' name='submit_vendor' class='btn btn-primary custom-btn'>Save</button></td>";
-                                echo "</tr>";
+                        ?>
+                                <tr>
+                                    <td><?php echo $row["vendor_name"]; ?></td>
+                                    <td><?php echo $row["vendor_email"]; ?></td>
+                                    <td><?php echo $row["register_date"]; ?></td>
+                                    <td>
+                                        <select name="vendor_status[<?php echo $row['vendor_id']; ?>]" class="form-select">
+                                            <option value="active" <?php echo ($row["vendor_status"] == "active" ? "selected" : ""); ?>>Active</option>
+                                            <option value="inactive" <?php echo ($row["vendor_status"] == "inactive" ? "selected" : ""); ?>>Inactive</option>
+                                            <option value="awaiting" <?php echo ($row["vendor_status"] == "awaiting" ? "selected" : ""); ?>>Awaiting</option>
+                                        </select>
+                                    </td>
+                                    <td><?php echo $row["role"]; ?></td>
+                                    <td><?php echo $row["points"]; ?></td>
+                                    <td><?php echo $row["balance"]; ?></td>
+                                    <td><button type="submit" name="submit_vendor" class="btn btn-primary custom-btn">Save</button></td>
+                                </tr>
+                        <?php
                             }
                         } else {
-                            echo "<tr><td colspan='10'>No vendors found.</td></tr>";
+                            echo "<tr><td colspan='8'>No vendors found.</td></tr>";
                         }
 
                         // Close database connection
@@ -89,8 +91,6 @@ if (!isset($_SESSION['admin_logged_in'])) {
                 </table>
             </div>
         </form>
-
-
     </div>
 </div>
 
