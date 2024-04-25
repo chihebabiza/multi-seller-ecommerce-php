@@ -35,7 +35,7 @@ if (isset($_POST['updateProfile'])) {
     // Update session variables with new name and email
     $_SESSION['vendorName'] = $newName;
     $_SESSION['vendorEmail'] = $newEmail;
-    header("Location: vendor.php");
+    header("Location: ../client/index.php");
 }
 
 // Include the head
