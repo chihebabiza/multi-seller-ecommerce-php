@@ -258,29 +258,30 @@ function updateProductStatus($productId, $status, $conn)
 }
 // Function to update vendor status in the database
 
-function updateVendorStatus($vendorId, $status, $conn)
+// Function to update vendor status
+function updateVendorStatus($conn)
 {
-    // Prepare an SQL statement to update the status of the vendor
-    $sql = "UPDATE vendor SET vendor_status = ? WHERE vendor_id = ?";
-
-    // Prepare the SQL statement
-    $stmt = mysqli_prepare($conn, $sql);
-
-    // Bind parameters to the prepared statement
-    mysqli_stmt_bind_param($stmt, "si", $status, $vendorId);
-
-    // Execute the prepared statement
-    mysqli_stmt_execute($stmt);
-
-    // Check if the update was successful
-    if (mysqli_stmt_affected_rows($stmt) > 0) {
-        return true; // Return true if the status was updated successfully
-    } else {
-        return false; // Return false if there was an error updating the status
+    // Check if admin is not logged in, redirect to login page
+    if (!isset($_SESSION['admin_logged_in'])) {
+        header("Location: ../client/index.php");
+        exit();
     }
 
-    // Close the prepared statement
-    mysqli_stmt_close($stmt);
+    // Check if the form is submitted
+    if (isset($_POST['submit_vendor'])) {
+        // Get vendor status from the form
+        $vendor_status = $_POST['vendor_status'];
+
+        // Loop through each vendor and update status
+        foreach ($vendor_status as $vendor_id => $status) {
+            $sql = "UPDATE vendor SET vendor_status='$status' WHERE vendor_id=$vendor_id";
+            mysqli_query($conn, $sql);
+        }
+
+        // Redirect to users.php after updating vendor status
+        header("Location: users.php");
+        exit();
+    }
 }
 // Function to validate admin login
 function adminLogin($email, $password, $conn)
@@ -528,8 +529,8 @@ function getVendorTotalShippedOrders($vendorName, $conn)
     // Close the statement
     $stmt->close();
 
-    // Return the total amount
-    return $row['total_amount'];
+    // Return the total amount or 0 if it's null
+    return $row['total_amount'] ?? 0;
 }
 
 // Function to get shipped orders
@@ -559,13 +560,16 @@ function getCancelledOrders($conn)
 }
 
 // Function to get all orders
-function getAllOrders($conn)
+function getVendorOrders($conn, $vendor_name)
 {
-    $sql = "SELECT COUNT(*) as all_orders FROM orders";
-    $result = $conn->query($sql);
+    $sql = "SELECT COUNT(*) as vendor_orders FROM orders WHERE seller = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $vendor_name);
+    $stmt->execute();
+    $result = $stmt->get_result();
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        return $row['all_orders'];
+        return $row['vendor_orders'];
     } else {
         return 0;
     }
@@ -635,7 +639,155 @@ function countOrders($conn)
     return $row['total_orders'];
 }
 
-// Example usage:
-// $totalUsers = countUsers($conn);
-// $totalProducts = countProducts($conn);
-// $totalOrders = countOrders($conn);
+function fetchCategories($conn)
+{
+    $categories = []; // Initialize an array to store categories
+
+    $sql = "SELECT DISTINCT category FROM product"; // SQL query to select distinct categories
+    $result = mysqli_query($conn, $sql); // Execute the query
+
+    // Populate the categories array with fetched categories
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $categories[] = $row['category']; // Store each category in the array
+        }
+    }
+
+    return $categories; // Return the array of categories
+}
+
+// Function to add items to the cart
+function addToCart($conn, $product_id, $selected_quantity)
+{
+    // Check if the product ID and selected quantity are not empty
+    if (!empty($product_id) && !empty($selected_quantity)) {
+        // Check if the product already exists in the cart
+        if (isset($_SESSION['cart'][$product_id])) {
+            $_SESSION['cart'][$product_id]['quantity'] += $selected_quantity; // Update the quantity if the product is already in the cart
+        } else {
+            $_SESSION['cart'][$product_id] = array( // Add the product to the cart with the selected quantity
+                'quantity' => $selected_quantity
+            );
+        }
+    } else {
+        // Handle the case where either product ID or quantity is empty
+        // You can throw an error, log a message, or handle it as per your requirement
+        // For example:
+        // throw new Exception('Product ID or quantity is empty');
+        // or
+        // error_log('Product ID or quantity is empty', 0);
+    }
+}
+
+
+// Function to filter products by category
+function filterProductsByCategory($conn, $selectedCategory)
+{
+    // Check if a category is selected
+    if (!empty($selectedCategory)) {
+        // Fetch products based on the selected category
+        $sql = "SELECT * FROM product WHERE category = ?"; // SQL query to select products based on category
+        $stmt = $conn->prepare($sql); // Prepare the SQL statement
+        $stmt->bind_param("s", $selectedCategory); // Bind the category parameter
+        $stmt->execute(); // Execute the prepared statement
+        $result = $stmt->get_result(); // Get the result of the query
+
+        // Fetch the filtered products and store them in the filteredProducts array
+        return $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        // If no category is selected, fetch all products
+        return getProducts($conn); // Call the getProducts function to fetch all products
+    }
+}
+
+// Function to remove a product from the cart and restore its quantity
+function removeProduct($product_id, $conn)
+{
+    if (isset($_SESSION['cart'][$product_id])) {
+        $quantity = $_SESSION['cart'][$product_id]['quantity']; // Get the quantity of the product being removed
+
+        // Remove the product from the cart
+        unset($_SESSION['cart'][$product_id]);
+    }
+}
+
+function resetCart()
+{
+    if (isset($_SESSION['cart'])) {
+        unset($_SESSION['cart']); // Unset the cart session variable
+        // Alternatively, you can destroy the entire session using session_destroy()
+        // session_destroy();
+    }
+}
+
+function getProductDetails($product_id, $conn)
+{
+    $sql = "SELECT * FROM product WHERE product_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_assoc();
+    } else {
+        return false; // Product not found
+    }
+}
+
+// Function to insert order into the database
+function insertOrder($product_id, $product_name, $description, $price, $image, $seller_name, $client_name, $city, $wilaya, $phone, $quantity, $status, $conn)
+{
+    $sql = "INSERT INTO orders (product_id, name, description, price, image, seller, client_name, city, wilaya, phone, order_date, quantity, status) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("isssssssssis", $product_id, $product_name, $description, $price, $image, $seller_name, $client_name, $city, $wilaya, $phone, $quantity, $status);
+    $stmt->execute();
+}
+
+// Function to fetch seller information based on seller name
+function getSellerInfo($conn, $sellerName)
+{
+    $sql = "SELECT * FROM vendor WHERE vendor_name = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $sellerName);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_assoc();
+    } else {
+        return false; // Seller not found
+    }
+}
+
+function getProduct($conn, $product_id)
+{
+    $sql = "SELECT * FROM product WHERE product_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_assoc();
+    } else {
+        return false; // Product not found
+    }
+}
+
+function getRelatedProducts($conn, $product)
+{
+    $relatedProducts = [];
+
+    if (!empty($product['category'])) {
+        $sql = "SELECT * FROM product WHERE category = ? AND product_id != ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $product['category'], $product['product_id']);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $relatedProducts = $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    return $relatedProducts;
+}
