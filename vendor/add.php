@@ -58,10 +58,12 @@ if (isset($_POST['addProduct'])) {
     registerProduct($productName, $description, $price, $image, $vendorName, $quantity, $category, $conn);
 }
 
+// Include the head
+include("../inc/head.php");
+
+// Include the header
+include("../inc/header.php");
 ?>
-<!-- Start Header/Navigation -->
-<?php include("../inc/header.php") ?>
-<!-- End Header/Navigation -->
 
 <!-- Start Contact Form -->
 <div class="container mt-5">
