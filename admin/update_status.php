@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_product'])) {
         }
         echo "Product statuses updated successfully.";
         // Redirect to a new page after updating statuses
-        header("Location: admin.php");
+        header("Location: announcements.php");
         exit(); // Add exit to stop further execution
     } else {
         echo "No status selected.";
