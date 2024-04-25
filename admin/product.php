@@ -16,7 +16,7 @@ if (isset($_GET['product_id'])) {
 	$product_id = $_GET['product_id'];
 
 	// Fetch product details based on product_id
-	$product = getProductDetails($conn, $product_id);
+	$product = getProduct($conn, $product_id);
 
 	if (!$product) {
 		// Product not found, you can handle this case accordingly
