@@ -14,10 +14,28 @@ include("../config/function.php");
 $vendorName = $_SESSION['vendorName'];
 $products = getProductsByVendorName($vendorName, $conn);
 
+// Include the head
+include("../inc/head.php");
+
+// Include the header
+include("../inc/dash.php");
 ?>
-<!-- Start Header/Navigation -->
-<?php include("../inc/dash.php") ?>
-<!-- End Header/Navigation -->
+
+<style>
+    .product-img {
+        height: 400px;
+    }
+
+    .btn-danger {
+        background-color: #e20026;
+        border-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+</style>
 
 <div class="container mb-5">
     <!-- Start Welcome -->
@@ -53,27 +71,27 @@ $products = getProductsByVendorName($vendorName, $conn);
                                     <p class="card-text">Price: <?php echo $product['price']; ?> DZD</p>
                                     <p class="card-text">Status: <span class="badge bg-<?php echo getStatusColorClass($product['status']); ?>"><?php echo ucfirst($product['status']); ?></span></p>
                                     <br>
-                                    <div class="row">
-                                        <div class="col">
+                                    <div class="row justify-content-center">
+                                        <div class="col-auto">
+                                            <!-- See button as an icon -->
+                                            <a href="product.php?product_id=<?php echo $product['product_id']; ?>" class="btn btn-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-auto">
                                             <!-- Edit button with link to edit.php -->
-                                            <a href="edit.php?product_id=<?php echo $product['product_id']; ?>" class="btn btn-primary btn-block">
+                                            <a href="edit.php?product_id=<?php echo $product['product_id']; ?>" class="btn btn-primary">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                         </div>
-                                        <div class="col">
+                                        <div class="col-auto">
                                             <!-- Delete button with form submission -->
                                             <form method="post" action="delete.php">
                                                 <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
-                                                <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Are you sure you want to delete this product?')">
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </form>
-                                        </div>
-                                        <div class="col">
-                                            <!-- See button as an icon -->
-                                            <a href="view_product.php?product_id=<?php echo $product['product_id']; ?>" class="btn btn-info btn-block">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -87,21 +105,6 @@ $products = getProductsByVendorName($vendorName, $conn);
             </div>
         </div>
     </section>
-
-    <?php
-    function getStatusColorClass($status)
-    {
-        switch ($status) {
-            case 'active':
-                return 'success'; // Bootstrap success color
-            case 'awaiting':
-                return 'warning'; // Bootstrap warning color
-            default:
-                return 'danger'; // Bootstrap danger color for other statuses
-        }
-    }
-    ?>
-
 </div>
 <!-- Start Footer -->
 <br><br><br>
