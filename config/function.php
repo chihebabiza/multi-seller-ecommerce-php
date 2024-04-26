@@ -200,29 +200,46 @@ function uploadImage($file)
     }
 }
 
-// Function to update product details in the database
 function updateProduct($productId, $productName, $description, $price, $image, $quantity, $category, $conn)
 {
     // SQL query to update the product
-    $sql = "UPDATE product SET product_name = ?, description = ?, price = ?, image = ?, quantity = ?, category = ?, status = 'Awaiting', update_date = NOW() WHERE product_id = ?";
+    $productSql = "UPDATE product SET product_name = ?, description = ?, price = ?, image = ?, quantity = ?, category = ?, status = 'Awaiting', update_date = NOW() WHERE product_id = ?";
 
-    // Prepare the statement
-    $stmt = $conn->prepare($sql);
+    // Prepare the product update statement
+    $productStmt = $conn->prepare($productSql);
 
-    // Bind parameters
-    $stmt->bind_param("ssdsisi", $productName, $description, $price, $image, $quantity, $category, $productId);
+    // Bind parameters for product update
+    $productStmt->bind_param("ssdsisi", $productName, $description, $price, $image, $quantity, $category, $productId);
 
-    // Execute the statement
-    if ($stmt->execute()) {
-        // Product updated successfully
+    // Execute the product update statement
+    $productUpdateSuccess = $productStmt->execute();
+
+    // Close the product statement
+    $productStmt->close();
+
+    // SQL query to update the orders table
+    $orderSql = "UPDATE orders SET name = ?, description = ?, price = ?, image = ? WHERE product_id = ?";
+
+    // Prepare the order update statement
+    $orderStmt = $conn->prepare($orderSql);
+
+    // Bind parameters for order update
+    $orderStmt->bind_param("ssdsi", $productName, $description, $price, $image, $productId);
+
+    // Execute the order update statement
+    $orderUpdateSuccess = $orderStmt->execute();
+
+    // Close the order statement
+    $orderStmt->close();
+
+    // Check if both product and order updates were successful
+    if ($productUpdateSuccess && $orderUpdateSuccess) {
+        // Both product and order updated successfully
         return true;
     } else {
-        // Error updating product
+        // Error updating product or order
         return false;
     }
-
-    // Close the statement
-    $stmt->close();
 }
 
 function getProductById($productId, $conn)
