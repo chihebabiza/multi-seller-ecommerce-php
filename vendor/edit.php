@@ -18,7 +18,7 @@ if (isset($_GET['product_id'])) {
     $product = getProductById($productId, $conn);
 
     // Check if the product exists and belongs to the logged-in vendor
-    if ($product && $product['seller_name'] == $_SESSION['vendorName']) {
+    if ($product && $product['vendor_id'] == getVendorIdByName($_SESSION['vendorName'], $conn)) {
         // Handle form submission
         if (isset($_POST['submit'])) {
             // Retrieve form data
@@ -46,7 +46,7 @@ if (isset($_GET['product_id'])) {
         }
     } else {
         // Redirect to dashboard if the product does not exist or does not belong to the vendor
-        header("Location: dashboard.php");
+        header("Location: annoucements.php");
         exit();
     }
 } else {
@@ -113,6 +113,7 @@ include("../inc/header.php");
             </form>
         </div>
     </div>
+    <br><br><br><br>
 </div>
 <!-- Footer -->
 <?php include("../inc/footer.php") ?>

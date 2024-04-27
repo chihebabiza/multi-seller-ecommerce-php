@@ -114,7 +114,7 @@ include("../inc/dash.php");
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Vendor Orders</h5>
                                 <br>
-                                <span class="h2 font-weight-bold mb-0"><?php echo getVendorOrders($conn, $vendorName); ?></span>
+                                <span class="h2 font-weight-bold mb-0"><?php echo getVendorOrders($conn, $vendor_id); ?></span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-danger text-white rounded-circle shadow">

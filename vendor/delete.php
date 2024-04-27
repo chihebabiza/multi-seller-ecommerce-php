@@ -23,7 +23,7 @@ if (isset($_POST['product_id'])) {
     }
 
     // Redirect back to the dashboard
-    header("Location: dashboard.php");
+    header("Location: annoucements.php");
     exit();
 } else {
     // Redirect to dashboard if product ID is not provided

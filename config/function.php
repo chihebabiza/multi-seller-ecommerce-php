@@ -69,27 +69,42 @@ function register($firstName, $lastName, $email, $password, $conn)
 
 function registerProduct($productName, $description, $price, $image, $vendorName, $quantity, $category, $conn)
 {
-    // Check if image upload was successful
-    if ($image !== '' && file_exists('../uploads/' . $image)) {
-        // SQL query to insert product into database
-        $sql = "INSERT INTO product (product_name, description, price, image, status, create_date, update_date, seller_name, quantity, category) 
-                VALUES ('$productName', '$description', $price, '$image', 'awaiting', NOW(), NOW(), '$vendorName', $quantity, '$category')";
+    // Get vendor id from vendor table based on vendor name
+    $vendorIdQuery = "SELECT vendor_id FROM vendor WHERE vendor_name = ?";
+    $stmt = mysqli_prepare($conn, $vendorIdQuery);
+    mysqli_stmt_bind_param($stmt, "s", $vendorName);
+    mysqli_stmt_execute($stmt);
+    $vendorIdResult = mysqli_stmt_get_result($stmt);
 
-        // Execute the query
-        if (mysqli_query($conn, $sql)) {
-            echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                    Product added successfully.
-                  </div>';
+    if ($vendorIdResult && mysqli_num_rows($vendorIdResult) > 0) {
+        $vendorRow = mysqli_fetch_assoc($vendorIdResult);
+        $vendorId = $vendorRow['vendor_id'];
+
+        // Check if image upload was successful
+        if ($image !== '' && file_exists('../uploads/' . $image)) {
+            // SQL query to insert product into database using prepared statement
+            $sql = "INSERT INTO product (vendor_id, product_name, description, price, image, status, create_date, update_date, quantity, category) 
+                    VALUES (?, ?, ?, ?, ?, 'awaiting', NOW(), NOW(), ?, ?)";
+            $stmt = mysqli_prepare($conn, $sql);
+            mysqli_stmt_bind_param($stmt, "issssis", $vendorId, $productName, $description, $price, $image, $quantity, $category);
+
+            // Execute the prepared statement
+            if (mysqli_stmt_execute($stmt)) {
+                echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                        Product added successfully.</div>';
+            } else {
+                echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Error adding product to the database: ' . mysqli_error($conn) . '</div>';
+            }
         } else {
+            // Image upload failed or no image was selected
             echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    Error adding product to the database: ' . mysqli_error($conn) . '
-                  </div>';
+                    Error uploading image or no image selected.</div>';
         }
     } else {
-        // Image upload failed or no image was selected
+        // Vendor not found
         echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                Error uploading image or no image selected.
-              </div>';
+                Vendor not found.</div>';
     }
 }
 
@@ -150,7 +165,7 @@ function getProductsByVendorName($vendorName, $conn)
     $products = array();
 
     // SQL query to fetch products for a specific vendor by vendor name
-    $sql = "SELECT * FROM product WHERE seller_name = ?";
+    $sql = "SELECT p.* FROM product p INNER JOIN vendor v ON p.vendor_id = v.vendor_id WHERE v.vendor_name = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $vendorName);
     $stmt->execute();
@@ -217,27 +232,12 @@ function updateProduct($productId, $productName, $description, $price, $image, $
     // Close the product statement
     $productStmt->close();
 
-    // SQL query to update the orders table
-    $orderSql = "UPDATE orders SET name = ?, description = ?, price = ?, image = ? WHERE product_id = ?";
-
-    // Prepare the order update statement
-    $orderStmt = $conn->prepare($orderSql);
-
-    // Bind parameters for order update
-    $orderStmt->bind_param("ssdsi", $productName, $description, $price, $image, $productId);
-
-    // Execute the order update statement
-    $orderUpdateSuccess = $orderStmt->execute();
-
-    // Close the order statement
-    $orderStmt->close();
-
-    // Check if both product and order updates were successful
-    if ($productUpdateSuccess && $orderUpdateSuccess) {
-        // Both product and order updated successfully
+    // Check if the product update was successful
+    if ($productUpdateSuccess) {
+        // Product updated successfully
         return true;
     } else {
-        // Error updating product or order
+        // Error updating product
         return false;
     }
 }
@@ -352,8 +352,12 @@ function adminLogin($email, $password, $conn)
 
 function getOrdersByVendorName($vendorName, $conn)
 {
-    // Prepare SQL statement to fetch orders
-    $sql = "SELECT * FROM orders WHERE seller = ?";
+    // Prepare SQL statement to fetch orders along with product details
+    $sql = "SELECT o.order_id, o.client_name, o.city, o.wilaya, o.phone, o.order_date, o.quantity, o.status, o.product_id, p.product_name, p.price, (o.quantity * p.price) AS total
+    FROM orders o
+    INNER JOIN product p ON o.product_id = p.product_id
+    WHERE o.vendor_id = (SELECT vendor_id FROM vendor WHERE vendor_name = ?)";
+
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $vendorName);
 
@@ -547,7 +551,11 @@ function getVendorPoints($vendorName, $conn)
 function getVendorTotalShippedOrders($vendorName, $conn)
 {
     // SQL query to get the total order value for a specific vendor where the status is 'shipped'
-    $sql = "SELECT SUM(quantity * price) AS total_amount FROM orders WHERE seller = ? AND status = 'shipped'";
+    $sql = "SELECT SUM(o.quantity * p.price) AS total_amount 
+            FROM orders o
+            INNER JOIN product p ON o.product_id = p.product_id
+            INNER JOIN vendor v ON p.vendor_id = v.vendor_id
+            WHERE v.vendor_name = ? AND o.status = 'shipped'";
 
     // Prepare the SQL statement
     $stmt = $conn->prepare($sql);
@@ -598,11 +606,11 @@ function getCancelledOrders($conn)
 }
 
 // Function to get all orders
-function getVendorOrders($conn, $vendor_name)
+function getVendorOrders($conn, $vendor_id)
 {
-    $sql = "SELECT COUNT(*) as vendor_orders FROM orders WHERE seller = ?";
+    $sql = "SELECT COUNT(*) as vendor_orders FROM orders WHERE vendor_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $vendor_name);
+    $stmt->bind_param("i", $vendor_id); // Assuming vendor_id is an integer
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {
@@ -758,38 +766,51 @@ function resetCart()
     }
 }
 
+// Function to fetch product details including vendor_id
 function getProductDetails($product_id, $conn)
 {
-    $sql = "SELECT * FROM product WHERE product_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $product_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // SQL query to fetch product details including vendor_id
+    $sql = "SELECT p.product_id, p.vendor_id, p.product_name, p.description, p.price, p.image, v.vendor_name AS seller_name
+            FROM product p
+            INNER JOIN vendor v ON p.vendor_id = v.vendor_id
+            WHERE p.product_id = $product_id";
 
-    if ($result && $result->num_rows > 0) {
-        return $result->fetch_assoc();
+    // Execute the query
+    $result = mysqli_query($conn, $sql);
+
+    // Check if query was successful
+    if ($result && mysqli_num_rows($result) > 0) {
+        // Fetch the row
+        $row = mysqli_fetch_assoc($result);
+        return $row;
     } else {
-        return false; // Product not found
+        return false;
     }
 }
 
 // Function to insert order into the database
-function insertOrder($product_id, $product_name, $description, $price, $image, $seller_name, $client_name, $city, $wilaya, $phone, $quantity, $status, $conn)
+function insertOrder($product_id, $vendor_id, $client_name, $city, $wilaya, $phone, $quantity, $status, $conn)
 {
-    // Insert the order into the orders table
-    $sql = "INSERT INTO orders (product_id, name, description, price, image, seller, client_name, city, wilaya, phone, order_date, quantity, status) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("isssssssssis", $product_id, $product_name, $description, $price, $image, $seller_name, $client_name, $city, $wilaya, $phone, $quantity, $status);
-    $stmt->execute();
+    // Escape all the variables to prevent SQL injection
+    $client_name = mysqli_real_escape_string($conn, $client_name);
+    $city = mysqli_real_escape_string($conn, $city);
+    $wilaya = mysqli_real_escape_string($conn, $wilaya);
+    $phone = mysqli_real_escape_string($conn, $phone);
+    $status = mysqli_real_escape_string($conn, $status);
 
-    // Decrease the quantity in the product table
-    $sql = "UPDATE product SET quantity = quantity - ? WHERE product_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $quantity, $product_id);
-    $stmt->execute();
+    // Construct the SQL query
+    $sql = "INSERT INTO orders (product_id, vendor_id, client_name, city, wilaya, phone, quantity, status, order_date)
+            VALUES ('$product_id', '$vendor_id', '$client_name', '$city', '$wilaya', '$phone', '$quantity', '$status', NOW())";
+
+    // Execute the query
+    if (mysqli_query($conn, $sql)) {
+        // Order inserted successfully
+        return true;
+    } else {
+        // Error inserting order
+        return false;
+    }
 }
-
 // Function to fetch seller information based on seller name
 function getSellerInfo($conn, $sellerName)
 {
@@ -808,7 +829,11 @@ function getSellerInfo($conn, $sellerName)
 
 function getProduct($conn, $product_id)
 {
-    $sql = "SELECT * FROM product WHERE product_id = ?";
+    $sql = "SELECT p.*, v.vendor_name AS seller_name
+            FROM product p
+            INNER JOIN vendor v ON p.vendor_id = v.vendor_id
+            WHERE p.product_id = ?";
+
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $product_id);
     $stmt->execute();
@@ -846,5 +871,20 @@ function getStatusColorClass($status)
             return 'warning'; // Bootstrap warning color
         default:
             return 'danger'; // Bootstrap danger color for other statuses
+    }
+}
+
+function getVendorIdByName($vendorName, $conn)
+{
+    $query = "SELECT vendor_id FROM vendor WHERE vendor_name = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $vendorName);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        return $row['vendor_id'];
+    } else {
+        return null;
     }
 }

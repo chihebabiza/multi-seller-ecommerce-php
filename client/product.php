@@ -54,6 +54,11 @@ include("../inc/header.php");
 		border-color: transparent;
 		/* Remove the border color */
 	}
+
+	.desc {
+		height: 220px;
+		overflow: hidden;
+	}
 </style>
 
 <!-- content -->
@@ -91,7 +96,7 @@ include("../inc/header.php");
 						<span class="h5"><?php echo $product['price']; ?> DZD</span>
 					</div>
 
-					<p>
+					<p class="desc">
 						<!-- Product description -->
 						<?php echo $product['description']; ?>
 					</p>
@@ -214,31 +219,31 @@ $relatedProducts = getRelatedProducts($conn, $product);
 ?>
 
 <div class="product-section">
-    <div class="container">
-        <div class="row">
-            <!-- Start Column  -->
-            <div class="col-md-12 col-lg-12">
-                <h2 class="section-title">Related Products</h2><br>
-                <div class="row">
-                    <?php foreach ($relatedProducts as $relatedProduct) : ?>
-                        <div class="col-md-3 mb-4">
-                            <div class="product-item">
-                                <a href="product.php?product_id=<?php echo $relatedProduct['product_id']; ?>" class="product-item">
-                                    <img src="../uploads/<?php echo $relatedProduct['image']; ?>" alt="<?php echo $relatedProduct['product_name']; ?>" class="image img-fluid product-thumbnail">
-                                    <h3 class="product-title"><?php echo $relatedProduct['product_name']; ?></h3>
-                                    <strong class="product-price">$<?php echo $relatedProduct['price']; ?></strong>
-                                </a>
-                                <form method="post" class="quantity-form" id="form_<?php echo $relatedProduct['product_id']; ?>">
-                                    <input type="hidden" name="product_id" value="<?php echo $relatedProduct['product_id']; ?>">
-                                </form>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-            <!-- End Column  -->
-        </div>
-    </div>
+	<div class="container">
+		<div class="row">
+			<!-- Start Column  -->
+			<div class="col-md-12 col-lg-12">
+				<h2 class="section-title">Related Products</h2><br>
+				<div class="row">
+					<?php foreach ($relatedProducts as $relatedProduct) : ?>
+						<div class="col-md-3 mb-4">
+							<div class="product-item">
+								<a href="product.php?product_id=<?php echo $relatedProduct['product_id']; ?>" class="product-item">
+									<img src="../uploads/<?php echo $relatedProduct['image']; ?>" alt="<?php echo $relatedProduct['product_name']; ?>" class="image img-fluid product-thumbnail">
+									<h3 class="product-title"><?php echo $relatedProduct['product_name']; ?></h3>
+									<strong class="product-price">$<?php echo $relatedProduct['price']; ?></strong>
+								</a>
+								<form method="post" class="quantity-form" id="form_<?php echo $relatedProduct['product_id']; ?>">
+									<input type="hidden" name="product_id" value="<?php echo $relatedProduct['product_id']; ?>">
+								</form>
+							</div>
+						</div>
+					<?php endforeach; ?>
+				</div>
+			</div>
+			<!-- End Column  -->
+		</div>
+	</div>
 </div>
 
 <!-- Footer -->

@@ -55,6 +55,11 @@ include("../inc/dash.php") ?>
 		border-color: transparent;
 		/* Remove the border color */
 	}
+
+	.desc {
+		height: 220px;
+		overflow: hidden;
+	}
 </style>
 
 <!-- content -->
@@ -64,7 +69,7 @@ include("../inc/dash.php") ?>
 			<aside class="col-lg-6">
 				<div class="border rounded-4 mb-3 d-flex justify-content-center">
 					<a data-fslightbox="mygallery" class="rounded-4" target="_blank" data-type="image" href="<?php echo $product['image']; ?>">
-						<img style="max-width: 100%; max-height: 70vh; margin: auto;" class="rounded-4 fit" src="../uploads/<?php echo $product['image']; ?>" alt="<?php echo $product['product_name']; ?>" />
+						<img style="max-width: 100%; height: 70vh; margin: auto;" class="rounded-4 fit" src="../uploads/<?php echo $product['image']; ?>" alt="<?php echo $product['product_name']; ?>" />
 					</a>
 				</div>
 			</aside>
@@ -92,7 +97,7 @@ include("../inc/dash.php") ?>
 						<span class="h5"><?php echo $product['price']; ?> DZD</span>
 					</div>
 
-					<p>
+					<p class="desc">
 						<!-- Product description -->
 						<?php echo $product['description']; ?>
 					</p>

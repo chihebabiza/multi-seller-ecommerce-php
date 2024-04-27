@@ -40,7 +40,7 @@ include("../inc/header.php");
             <?php
             include("../config/connect.php");
 
-            $sql = "SELECT * FROM product";
+            $sql = "SELECT product.*, vendor.vendor_name FROM product INNER JOIN vendor ON product.vendor_id = vendor.vendor_id";
             $result = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($result) > 0) {
@@ -64,9 +64,11 @@ include("../inc/header.php");
                         ?>
                             <tr>
                                 <td><img src="../uploads/<?php echo $row['image']; ?>" alt="<?php echo $row['product_name']; ?>" class="image img-fluid product-thumbnail" style="width: 50px; height: 50px;"></td>
-                                <td><?php echo $row['product_name']; ?></td>
-                                <td class="desc-admin">
-                                    <p style="width: 250px; overflow: hidden;"><?php echo $row['description']; ?></p>
+                                <td>
+                                    <p style="width: 100px; max-height: 20px; overflow: hidden; margin: 0;"><?php echo $row['product_name']; ?></p>
+                                </td>
+                                <td>
+                                    <p style="width: 200px; max-height: 20px; overflow: hidden; margin: 0;"><?php echo $row['description']; ?></p>
                                 </td>
                                 <td><?php echo $row['price'] . " DZD"; ?></td>
                                 <td>
@@ -77,7 +79,7 @@ include("../inc/header.php");
                                     </select>
                                 </td>
                                 <td><?php echo $row['create_date']; ?></td>
-                                <td><?php echo $row['seller_name']; ?></td>
+                                <td><?php echo $row['vendor_name']; ?></td>
                                 <td>
                                     <button type="submit" name="submit_product" class="btn btn-primary mx-2"><i class="fas fa-save"></i></button>
                                     <a href="product.php?product_id=<?php echo $row['product_id']; ?>" class="btn btn-primary"><i class="fas fa-eye"></i></a>

@@ -39,6 +39,7 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 
 				if ($row) {
 					$product_id = $row['product_id']; // Use the product ID from the product table
+					$vendor_id = $row['vendor_id']; // Use the vendor ID from the product table
 					$product_name = $row['product_name'];
 					$description = $row['description'];
 					$price = $row['price'];
@@ -50,7 +51,7 @@ if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
 					$status = "pending";
 
 					// Insert order into the database
-					insertOrder($product_id, $product_name, $description, $price, $image, $seller_name, $client_name, $city, $wilaya, $phone, $quantity, $status, $conn);
+					insertOrder($product_id, $vendor_id, $client_name, $city, $wilaya, $phone, $quantity, $status, $conn);
 
 					// Update vendor points
 					$pointsToAdd = 5 * $quantity;
