@@ -95,17 +95,9 @@ include("../inc/header.php");
                     <label class="text-black" for="category">Category</label>
                     <select name="category" id="category" class="form-control" required>
                         <option value="" disabled selected>Select a category</option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="Fashion">Fashion</option>
-                        <option value="Home & Garden">Home & Garden</option>
-                        <option value="Books, Movies & Music">Books, Movies & Music</option>
-                        <option value="Collectibles & Antiques">Collectibles & Antiques</option>
-                        <option value="Sports & Outdoors">Sports & Outdoors</option>
-                        <option value="Toys & Games">Toys & Games</option>
-                        <option value="Health & Beauty">Health & Beauty</option>
-                        <option value="Automotive">Automotive</option>
-                        <option value="Miscellaneous">Miscellaneous</option>
-                        <option value="Other">Other</option>
+                        <option value="Computer Components">Computer Components</option>
+                        <option value="Home Appliances">Home Appliances</option>
+                        <option value="Auto Parts">Auto Parts</option>
                     </select>
                 </div>
                 <br>
