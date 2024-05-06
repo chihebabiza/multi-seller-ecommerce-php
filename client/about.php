@@ -11,7 +11,6 @@ include("../config/function.php");
 if (!isset($_SESSION['cart'])) {
 	$_SESSION['cart'] = [];
 }
-$conn->close();
 
 // include the head
 include("../inc/head.php");
