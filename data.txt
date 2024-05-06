@@ -1,0 +1,11 @@
+Admin:
+Email: o@admin.com
+Password: chiheb
+
+Vendor 1:
+Email: amine@gmail.com
+Password: chiheb
+
+Vendor 2:
+Email: chiheb@gmail.com
+Password: chiheb
