@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 $servername = "localhost";
 $username = "root";
 $password = "chiheb"; 
-$database = "ch";
+$database = "brico-dz";
 
 $conn = new mysqli($servername, $username, $password, $database);
 
