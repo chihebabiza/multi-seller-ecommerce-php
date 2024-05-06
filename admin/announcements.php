@@ -80,7 +80,7 @@ include("../inc/header.php");
                                 </td>
                                 <td><?php echo $row['create_date']; ?></td>
                                 <td><?php echo $row['vendor_name']; ?></td>
-                                <td>
+                                <td style="width: 200px;">
                                     <button type="submit" name="submit_product" class="btn btn-primary mx-2"><i class="fas fa-save"></i></button>
                                     <a href="product.php?product_id=<?php echo $row['product_id']; ?>" class="btn btn-primary"><i class="fas fa-eye"></i></a>
                                 </td>

@@ -95,7 +95,7 @@ include("../inc/header.php");
                                             </select>
                                         </div>
                                 </td>
-                                <td>
+                                <td style="width: 190px;">
                                     <button class="btn btn-primary" type="submit">
                                         <i class="fas fa-save"></i> <!-- Font Awesome save icon -->
                                     </button>
