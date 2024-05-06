@@ -59,7 +59,7 @@ function register($firstName, $lastName, $email, $password, $conn)
             $_SESSION['vendorName'] = $firstName . ' ' . $lastName;
             $_SESSION['points'] = $points;
 
-            header("Location: ../vendor/vendor.php");
+            header("Location: ../client/index.php");
             exit();
         } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
