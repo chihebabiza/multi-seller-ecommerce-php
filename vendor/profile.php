@@ -12,6 +12,19 @@ if (!isset($_SESSION['vendorName'])) {
 $name = $_SESSION['vendorName'];
 $email = isset($_SESSION['vendorEmail']) ? $_SESSION['vendorEmail'] : '';
 
+// Fetch vendor data from the database
+$vendorId = $_SESSION['vendor_id'];
+$sql = "SELECT `vendor_name`, `vendor_email` FROM `vendor` WHERE `vendor_id` = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $vendorId);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+if ($row) {
+    $name = $row['vendor_name'];
+    $email = $row['vendor_email'];
+}
+
 if (isset($_POST['updateProfile'])) {
     $newName = $_POST['newName'];
     $newEmail = $_POST['newEmail'];
