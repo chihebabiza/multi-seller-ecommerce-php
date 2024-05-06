@@ -87,7 +87,7 @@ include("../inc/header.php");
 							<i class="fas fa-star-half-alt"></i>
 							<span class="ms-1">4.5</span>
 						</div>
-						<span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><?php echo $product['quantity']; ?> items in stock</span>
+						<span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><?php echo $product['quantity']; ?> items</span>
 						<span class="text-success ms-2">In stock</span>
 					</div>
 
@@ -194,7 +194,7 @@ include("../inc/header.php");
 										<span class="fw-bold">Register Date : </span> <?php echo $seller['register_date']; ?>
 									</li>
 									<li class="list-group-item">
-										<span class="fw-bold">Total Orders : </span> <?php echo getVendorOrders($conn, $seller['vendor_name']); ?>
+										<span class="fw-bold">Total Orders : </span> <?php echo getVendorOrders($conn, $seller['vendor_id']); ?>
 									</li>
 								</ul>
 							<?php } else {
