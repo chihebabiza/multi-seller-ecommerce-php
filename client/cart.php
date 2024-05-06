@@ -21,15 +21,17 @@ include("../inc/header.php") ?>
 	<div class="container">
 		<!-- Start Cart Table -->
 		<div class="row mb-5">
-			<?php
-			if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
-				echo '<h2>Your cart is empty</h2>
-					<div class="row mb-5">
+			<?php if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) { ?>
+				<h2>Your cart is empty</h2>
+				<div class="row mb-5">
 					<div class="col-md-6 mb-3 mb-md-0">
 						<br><a href="shop.php"><button class="btn btn-primary btn-sm btn-block">Continue Shopping</button></a>
 					</div>
-				</div>';
-			} else {
+				</div>
+				<script src="../js/bootstrap.bundle.min.js"></script>
+				<script src="../js/tiny-slider.js"></script>
+				<script src="../js/custom.js"></script>
+			<?php } else {
 			?>
 				<form class="col-md-12" method="post">
 					<div class="site-blocks-table">
