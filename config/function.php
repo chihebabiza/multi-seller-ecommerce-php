@@ -5,12 +5,17 @@ ini_set('display_errors', 1);
 
 function login($email, $password, $conn)
 {
-    $sql = "SELECT vendor_id, vendor_name, vendor_password, points, role FROM vendor WHERE vendor_email = '$email'";
+    $sql = "SELECT vendor_id, vendor_name, vendor_password, points, role, vendor_status FROM vendor WHERE vendor_email = '$email'";
     $result = mysqli_query($conn, $sql);
 
     if ($result) {
         if (mysqli_num_rows($result) == 1) {
             $row = mysqli_fetch_assoc($result);
+            $vendor_status = $row['vendor_status'];
+            if ($vendor_status == 'inactive') {
+                echo '<div class="alert alert-danger" role="alert">Your account is inactive. Please contact the administrator.</div>';
+                return; // Exit the function if the account is inactive
+            }
             if (password_verify($password, $row['vendor_password'])) {
                 $role = $row['role'];
                 if ($role == 'vendor') {
@@ -579,32 +584,6 @@ function getVendorTotalShippedOrders($vendorName, $conn)
     return $row['total_amount'] ?? 0;
 }
 
-// Function to get shipped orders
-function getShippedOrders($conn)
-{
-    $sql = "SELECT COUNT(*) as shipped_orders FROM orders WHERE status = 'shipped'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        return $row['shipped_orders'];
-    } else {
-        return 0;
-    }
-}
-
-// Function to get cancelled orders
-function getCancelledOrders($conn)
-{
-    $sql = "SELECT COUNT(*) as cancelled_orders FROM orders WHERE status = 'cancelled'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        return $row['cancelled_orders'];
-    } else {
-        return 0;
-    }
-}
-
 // Function to get all orders
 function getVendorOrders($conn, $vendor_id)
 {
@@ -621,11 +600,46 @@ function getVendorOrders($conn, $vendor_id)
     }
 }
 
-// Function to get pending orders
-function getPendingOrders($conn)
+// Function to get shipped orders for a specific vendor
+function getShippedOrders($conn, $vendor_id)
 {
-    $sql = "SELECT COUNT(*) as pending_orders FROM orders WHERE status = 'pending'";
-    $result = $conn->query($sql);
+    $sql = "SELECT COUNT(*) as shipped_orders FROM orders WHERE vendor_id = ? AND status = 'shipped'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $vendor_id); // Assuming vendor_id is an integer
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['shipped_orders'];
+    } else {
+        return 0;
+    }
+}
+
+// Function to get cancelled orders for a specific vendor
+function getCancelledOrders($conn, $vendor_id)
+{
+    $sql = "SELECT COUNT(*) as cancelled_orders FROM orders WHERE vendor_id = ? AND status = 'cancelled'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $vendor_id); // Assuming vendor_id is an integer
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['cancelled_orders'];
+    } else {
+        return 0;
+    }
+}
+
+// Function to get pending orders for a specific vendor
+function getPendingOrders($conn, $vendor_id)
+{
+    $sql = "SELECT COUNT(*) as pending_orders FROM orders WHERE vendor_id = ? AND status = 'pending'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $vendor_id); // Assuming vendor_id is an integer
+    $stmt->execute();
+    $result = $stmt->get_result();
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         return $row['pending_orders'];
