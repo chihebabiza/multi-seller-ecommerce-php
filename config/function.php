@@ -136,21 +136,13 @@ function getProducts($conn)
     return $activeProducts;
 }
 
-function updateProfile($vendorId, $newName, $newEmail, $newPassword)
+function updateProfile($vendorId, $newName, $newEmail)
 {
     global $conn;
 
-    // Check if a new password is provided and hash it
-    if (!empty($newPassword)) {
-        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-        $sql = "UPDATE vendor SET vendor_name = ?, vendor_email = ?, vendor_password = ? WHERE vendor_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssi", $newName, $newEmail, $hashedPassword, $vendorId);
-    } else {
-        $sql = "UPDATE vendor SET vendor_name = ?, vendor_email = ? WHERE vendor_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssi", $newName, $newEmail, $vendorId);
-    }
+    $sql = "UPDATE vendor SET vendor_name = ?, vendor_email = ? WHERE vendor_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $newName, $newEmail, $vendorId);
 
     // Execute the query
     if ($stmt->execute()) {
@@ -590,6 +582,21 @@ function getVendorOrders($conn, $vendor_id)
     $sql = "SELECT COUNT(*) as vendor_orders FROM orders WHERE vendor_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $vendor_id); // Assuming vendor_id is an integer
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['vendor_orders'];
+    } else {
+        return 0;
+    }
+}
+
+function getVendorOrdersbyOrderId($conn, $vendor_id, $product_id)
+{
+    $sql = "SELECT COUNT(*) as vendor_orders FROM orders WHERE vendor_id = ? AND product_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $vendor_id, $product_id); // Assuming both vendor_id and product_id are integers
     $stmt->execute();
     $result = $stmt->get_result();
     if ($result->num_rows > 0) {

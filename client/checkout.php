@@ -45,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				insertOrder($product_id, $vendor_id, $client_name, $city, $wilaya, $phone, $quantity, $status, $conn);
 
 				// Update vendor points
-				$pointsToAdd = 5 * $quantity;
 				addVendorPoints($seller_name, $pointsToAdd, $conn);
 
 				// Update quantity

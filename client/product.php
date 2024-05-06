@@ -194,7 +194,7 @@ include("../inc/header.php");
 										<span class="fw-bold">Register Date : </span> <?php echo $seller['register_date']; ?>
 									</li>
 									<li class="list-group-item">
-										<span class="fw-bold">Total Orders : </span> <?php echo getVendorOrders($conn, $seller['vendor_id']); ?>
+										<span class="fw-bold">Total Orders : </span> <?php echo getVendorOrdersbyOrderId($conn, $seller['vendor_id'], $product['product_id']); ?>
 									</li>
 								</ul>
 							<?php } else {
