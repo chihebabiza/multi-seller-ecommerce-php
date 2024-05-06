@@ -15,7 +15,7 @@ include("../inc/head.php");
 // Include the header
 include("../inc/header.php");
 ?>
-
+<link rel="stylesheet" href="../css/dash.css">
 <div class="container">
     <!-- Start Welcome -->
     <div class="py-5 lc-block">
@@ -67,10 +67,9 @@ include("../inc/header.php");
                                     <td><?php echo $row["vendor_email"]; ?></td>
                                     <td><?php echo $row["register_date"]; ?></td>
                                     <td>
-                                        <select name="vendor_status[<?php echo $row['vendor_id']; ?>]" class="form-select">
+                                        <select name="vendor_status[<?php echo $row['vendor_id']; ?>]" class="form-select" <?php echo ($row["role"] == "admin" ? "disabled" : ""); ?>>
                                             <option value="active" <?php echo ($row["vendor_status"] == "active" ? "selected" : ""); ?>>Active</option>
                                             <option value="inactive" <?php echo ($row["vendor_status"] == "inactive" ? "selected" : ""); ?>>Inactive</option>
-                                            <option value="awaiting" <?php echo ($row["vendor_status"] == "awaiting" ? "selected" : ""); ?>>Awaiting</option>
                                         </select>
                                     </td>
                                     <td><?php echo $row["role"]; ?></td>

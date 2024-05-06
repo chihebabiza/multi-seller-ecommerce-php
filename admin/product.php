@@ -1,15 +1,14 @@
 <?php
 session_start();
-
-// include the connect.php and function.php
-include("../config/connect.php");
-include("../config/function.php");
-
+// Redirect to login page if the user is not logged in
 // Check if the admin is logged in, if not, redirect to login page
 if (!isset($_SESSION['admin_logged_in'])) {
 	header("Location: ../client/index.php");
 	exit();
 }
+
+include("../config/connect.php");
+include("../config/function.php");
 
 // Check if product_id is provided in the URL
 if (isset($_GET['product_id'])) {
@@ -28,13 +27,14 @@ if (isset($_GET['product_id'])) {
 	header("Location: index.php");
 	exit;
 }
-?>
 
-<!-- Header -->
-<?php include("../inc/head.php"); ?>
-<?php include("../inc/header.php"); ?>
+// include the head
+include("../inc/head.php");
 
-<!-- Content -->
+// include the header
+include("../inc/header.php") ?>
+
+<!-- include the style in this page only -->
 <style>
 	.icon-hover:hover {
 		border-color: #3b71ca !important;
@@ -54,14 +54,21 @@ if (isset($_GET['product_id'])) {
 		border-color: transparent;
 		/* Remove the border color */
 	}
+
+	.desc {
+		height: 220px;
+		overflow: hidden;
+	}
 </style>
+
+<!-- content -->
 <section class="py-5">
 	<div class="container">
 		<div class="row gx-5">
 			<aside class="col-lg-6">
 				<div class="border rounded-4 mb-3 d-flex justify-content-center">
 					<a data-fslightbox="mygallery" class="rounded-4" target="_blank" data-type="image" href="<?php echo $product['image']; ?>">
-						<img style="max-width: 100%; max-height: 70vh; margin: auto;" class="rounded-4 fit" src="../uploads/<?php echo $product['image']; ?>" alt="<?php echo $product['product_name']; ?>" />
+						<img style="max-width: 100%; height: 70vh; margin: auto;" class="rounded-4 fit" src="../uploads/<?php echo $product['image']; ?>" alt="<?php echo $product['product_name']; ?>" />
 					</a>
 				</div>
 			</aside>
@@ -70,24 +77,27 @@ if (isset($_GET['product_id'])) {
 					<h4 class="title text-dark">
 						<?php echo $product['product_name']; ?>
 					</h4>
-					<!-- Remaining HTML content -->
-					<!-- Star ratings and orders count -->
-					<div class="text-warning mb-1 me-2">
-						<i class="fa fa-star"></i>
-						<i class="fa fa-star"></i>
-						<i class="fa fa-star"></i>
-						<i class="fa fa-star"></i>
-						<i class="fas fa-star-half-alt"></i>
-						<span class="ms-1">4.5</span>
+					<div class="d-flex flex-row my-3">
+						<!-- Star ratings and orders count -->
+						<div class="text-warning mb-1 me-2">
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fa fa-star"></i>
+							<i class="fas fa-star-half-alt"></i>
+							<span class="ms-1">4.5</span>
+						</div>
+						<span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><?php echo $product['quantity']; ?> items in stock</span>
+						<span class="text-success ms-2">In stock</span>
 					</div>
-					<span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i><?php echo $product['quantity']; ?> items in stock</span>
-					<span class="text-success ms-2">In stock</span>
-					<!-- Product price -->
+
 					<div class="mb-3">
+						<!-- Product price -->
 						<span class="h5"><?php echo $product['price']; ?> DZD</span>
 					</div>
 
-					<p>
+					<p class="desc">
+						<!-- Product description -->
 						<?php echo $product['description']; ?>
 					</p>
 
@@ -113,7 +123,7 @@ if (isset($_GET['product_id'])) {
 	</div>
 </section>
 
-<!-- Seller Profile Section -->
+<!-- content -->
 <section class="py-5 bg-white">
 	<div class="container">
 		<div class="row gx-4">
@@ -137,35 +147,52 @@ if (isset($_GET['product_id'])) {
 						</div>
 						<div class="tab-pane fade mb-2" id="seller-profile" role="tabpanel" aria-labelledby="seller-profile-tab">
 							<?php
-							// Fetch seller information
-							$sellerInfo = getSellerInfo($conn, $product['seller_name']);
-							if ($sellerInfo) : ?>
-								<!-- Display seller information -->
+							// Assuming you have a connection to the database established
+
+							// Query to fetch seller information based on product's seller_name
+							$sellerName = $product['seller_name'];
+							$sql = "SELECT `vendor_id`, `vendor_name`, `vendor_email`, `register_date`, `vendor_status`, `vendor_password`, `points`, `balance`, `role` FROM `vendor` WHERE `vendor_name` = ?";
+							$stmt = $conn->prepare($sql);
+							$stmt->bind_param("s", $sellerName);
+							$stmt->execute();
+							$result = $stmt->get_result();
+
+							// Check if seller information is found
+							if ($result && $result->num_rows > 0) {
+								$seller = $result->fetch_assoc();
+							?>
+								<!-- Display seller name and email -->
 								<ul class="list-group">
 									<li class="list-group-item">
-										<span class="fw-bold">Seller Name:</span> <?php echo $sellerInfo['vendor_name']; ?>
+										<span class="fw-bold">Seller Name : </span> <?php echo $seller['vendor_name']; ?>
 									</li>
 									<li class="list-group-item">
-										<span class="fw-bold">Seller Email:</span> <?php echo $sellerInfo['vendor_email']; ?>
+										<span class="fw-bold">Seller Email : </span> <?php echo $seller['vendor_email']; ?>
 									</li>
 									<li class="list-group-item">
-										<span class="fw-bold">Register Date:</span> <?php echo $sellerInfo['register_date']; ?>
+										<span class="fw-bold">Register Date : </span> <?php echo $seller['register_date']; ?>
 									</li>
 									<li class="list-group-item">
-										<span class="fw-bold">Total Orders:</span> <?php echo getVendorOrders($conn, $sellerInfo['vendor_name']); ?>
+										<span class="fw-bold">Total Orders : </span> <?php echo getVendorOrders($conn, $seller['vendor_id']); ?>
 									</li>
 								</ul>
-							<?php else : ?>
-								<p>Seller information not found.</p>
-							<?php endif; ?>
+							<?php } else {
+								echo "Seller information not found.";
+							}
+							?>
+
 						</div>
 					</div>
+					<!-- Pills content -->
 				</div>
 			</div>
 		</div>
 	</div>
-	<br><br><br><br><br>
+	<!-- Start Related Products Section -->
+	<!-- End Related Products Section -->
+	<br><br><br>
 </section>
 
 <!-- Footer -->
-<?php include("../inc/footer.php"); ?>
+<?php include("../inc/footer.php") ?>
+<!-- Footer -->

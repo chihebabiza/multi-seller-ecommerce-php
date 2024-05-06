@@ -16,7 +16,7 @@ include("../inc/head.php");
 // Include the header
 include("../inc/header.php");
 ?>
-
+<link rel="stylesheet" href="../css/dash.css">
 <div class="container">
     <!-- Start Welcome -->
     <div class="py-5 lc-block">

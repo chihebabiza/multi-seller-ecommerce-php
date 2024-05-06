@@ -5,7 +5,9 @@
 	?>
 		<nav class="custom-navbar navbar navbar-expand-md navbar-dark sticky-top" arial-label="Furni navigation bar">
 			<div class="container">
-				<a class="navbar-brand" href="/project/client/index.php">BRICO <span>DZ</span></a>
+				<a class="navbar-brand" href="/project/client/index.php">
+					<img style="height: 50px;" src="../images/logo.png" alt="BRICO DZ logo">
+				</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
@@ -52,11 +54,11 @@
 	<?php
 	} elseif (isset($_SESSION['admin_logged_in'])) {
 	?>
-		<link href="../css/dash.css" rel="stylesheet">
 		<nav class="custom-navbar navbar navbar-expand-md navbar-dark sticky-top" arial-label="Furni navigation bar">
 			<div class="container">
-				<a class="navbar-brand" href="#">BRICO <span>DZ</span></a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+				<a class="navbar-brand" href="#">
+					<img style="height: 50px;" src="../images/logo.png" alt="BRICO DZ logo">
+				</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarsFurni">
@@ -85,8 +87,9 @@
 	?>
 		<nav class="custom-navbar navbar navbar-expand-md navbar-dark sticky-top" arial-label="Furni navigation bar">
 			<div class="container">
-				<a class="navbar-brand" href="index.php">BRICO <span>DZ</span></a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+				<a class="navbar-brand" href="/project/client/index.php">
+					<img style="height: 50px;" src="../images/logo.png" alt="BRICO DZ logo">
+				</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarsFurni">
