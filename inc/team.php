@@ -10,7 +10,7 @@
         <!-- Start Column 1 -->
         <div class="col-12 col-md-6 col-lg-4 mb-5 mb-md-0">
             <div class="card">
-                <img src="../images/person_2.jpg" class="card-img-top" alt="Chiheb Abiza">
+                <img src="../images/team2.jpg" class="card-img-top" alt="Chiheb Abiza">
                 <div class="card-body">
                     <h5 class="card-title">Chiheb ABIZA</h5>
                     <p class="card-text">Project Manager</p>
@@ -24,7 +24,7 @@
         <!-- Start Column 2 -->
         <div class="col-12 col-md-6 col-lg-4 mb-5 mb-md-0">
             <div class="card">
-                <img src="../images/person_4.jpg" class="card-img-top" alt="...">
+                <img src="../images/team4.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Belkis KANTOUR</h5>
                     <p class="card-text">Back-end Developer</p>
@@ -37,7 +37,7 @@
         <!-- Start Column 3 -->
         <div class="col-12 col-md-6 col-lg-4 mb-5 mb-md-0">
             <div class="card">
-                <img src="../images/person_3.jpg" class="card-img-top" alt="Said Houidech">
+                <img src="../images/team3.jpg" class="card-img-top" alt="Said Houidech">
                 <div class="card-body">
                     <h5 class="card-title">Said HAOUIDECHE</h5>
                     <p class="card-text">Front-end Developer</p>
@@ -51,7 +51,7 @@
         <!-- Start Column 4 -->
         <div class="col-12 col-md-6 col-lg-4 mb-5 mb-md-0">
             <div class="card">
-                <img src="../images/person_4.jpg" class="card-img-top" alt="...">
+                <img src="../images/team4.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Dania BOUROUIH</h5>
                     <p class="card-text">UI/UX Designer</p>
@@ -64,7 +64,7 @@
         <!-- Start Column 5 -->
         <div class="col-12 col-md-6 col-lg-4 mb-5 mb-md-0">
             <div class="card">
-                <img src="../images/person_1.jpg" class="card-img-top" alt="...">
+                <img src="../images/team1.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Amine KEROUR</h5>
                     <p class="card-text">Back-end Developer</p>
@@ -77,7 +77,7 @@
         <!-- Start Column 6 -->
         <div class="col-12 col-md-6 col-lg-4 mb-5 mb-md-0">
             <div class="card">
-                <img src="../images/person_4.jpg" class="card-img-top" alt="...">
+                <img src="../images/team4.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Minet Errahmane MOUFOK</h5>
                     <p class="card-text">Content Manager / Copywriter</p>

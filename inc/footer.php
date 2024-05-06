@@ -1,8 +1,5 @@
 <footer class="footer-section">
     <div class="container relative">
-        <div class="sofa-img">
-            <img src="../images/footer.png" alt="Image" class="img-fluid">
-        </div>
         <div class="row">
             <div class="col-lg-8">
                 <div class="subscription-form">
