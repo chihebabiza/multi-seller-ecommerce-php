@@ -29,7 +29,7 @@ INSERT INTO `orders` (`order_id`, `product_id`, `vendor_id`, `client_name`, `cit
 (39, 43, 16, 'saadoudi idris', 'bab ezzouar', 'Alger', '0567230912', '2024-04-27', 1, 'cancelled'),
 (40, 52, 16, 'chiheb abiza', 'Bougaa', 'setif', '0657842205', '2024-04-29', 2, 'shipped'),
 (41, 43, 12, 'saadoudi idris', 'bab ezzouar', 'Alger', '0567230912', '2024-04-27', 1, 'cancelled'),
-(42, 43, 12, 'belkis hamza', 'bejaia', 'bejaia', '0567230912', '2024-04-27', 1, 'pending'),
+(42, 43, 12, 'belkis hamza', 'bejaia', 'bejaia', '0567230912', '2024-04-27', 1, 'pending');
 
 -- --------------------------------------------------------
 
@@ -89,9 +89,9 @@ CREATE TABLE `vendor` (
 --
 
 INSERT INTO `vendor` (`vendor_id`, `vendor_name`, `vendor_email`, `register_date`, `vendor_status`, `vendor_password`, `points`, `balance`, `role`) VALUES
-(12, 'amine kerour', 'amine@gmail.com', '2024-04-06', 'active', '$2y$10$EaD5BZFiCj5rHz2C2dnvt.FE2pu5g/endFp0ZDh04sDSrQDxU9dM.', 20, 10, 'vendor'),
+(12, 'amine kerour', 'amine@gmail.com', '2024-04-06', 'active', '$2y$10$EaD5BZFiCj5rHz2C2dnvt.FE2pu5g/endFp0ZDh04sDSrQDxU9dM.', 5, 10, 'vendor'),
 (15, 'admin', 'o@admin.com', '2024-04-15', 'active', '$2y$10$0./d3wTML9GXT2MOHoQHPe93dqYmQVuccDKZeTZhXTTHJG7EVvBxu', 0, 0, 'admin'),
-(16, 'chiheb abiza', 'chiheb@gmail.com', '2024-04-16', 'active', '$2y$10$uSKiNBCwQ7QNOV4VJLB97ObhYpK1/iwPUKf9FMydIO19fZf4AK6ZG', 10, 10, 'vendor');
+(16, 'chiheb abiza', 'chiheb@gmail.com', '2024-04-16', 'active', '$2y$10$uSKiNBCwQ7QNOV4VJLB97ObhYpK1/iwPUKf9FMydIO19fZf4AK6ZG', 10, 0, 'vendor');
 
 --
 -- Indexes for dumped tables
@@ -123,17 +123,17 @@ ALTER TABLE `vendor`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `vendor`
 --
 ALTER TABLE `vendor`
-  MODIFY `vendor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `vendor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
