@@ -11,8 +11,6 @@ include("../config/function.php");
 if (!isset($_SESSION['cart'])) {
 	$_SESSION['cart'] = [];
 }
-$conn->close();
-
 // include the head
 include("../inc/head.php");
 
@@ -61,7 +59,7 @@ include("../inc/header.php") ?>
 									</svg>
 								</div> <!-- /.icon -->
 								<div class="service-contents">
-									<p>43 Raymouth Rd. Baltemoer, London 3910</p>
+									<p>Campus El Bez. Sétif 19137, Algérie</p>
 								</div> <!-- /.service-contents-->
 							</div> <!-- /.service -->
 						</div>
@@ -74,7 +72,7 @@ include("../inc/header.php") ?>
 									</svg>
 								</div> <!-- /.icon -->
 								<div class="service-contents">
-									<p>info@yourdomain.com</p>
+									<p>contact@bricodz.com</p>
 								</div> <!-- /.service-contents-->
 							</div> <!-- /.service -->
 						</div>
@@ -87,7 +85,7 @@ include("../inc/header.php") ?>
 									</svg>
 								</div> <!-- /.icon -->
 								<div class="service-contents">
-									<p>+1 294 3925 3939</p>
+									<p>+213 657 842 205</p>
 								</div> <!-- /.service-contents-->
 							</div> <!-- /.service -->
 						</div>
