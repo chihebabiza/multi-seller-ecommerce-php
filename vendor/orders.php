@@ -99,7 +99,7 @@ include("../inc/header.php");
                                     <button class="btn btn-primary" type="submit">
                                         <i class="fas fa-save"></i> <!-- Font Awesome save icon -->
                                     </button>
-                                    <a class="btn btn-success" href="product.php?product_id=<?php echo $order['product_id']; ?>">
+                                    <a class="btn btn-primary" href="product.php?product_id=<?php echo $order['product_id']; ?>">
                                         <i class="fas fa-eye"></i> <!-- Font Awesome eye icon -->
                                     </a>
                                     </form>
