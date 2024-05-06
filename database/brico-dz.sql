@@ -1,27 +1,7 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1-4.fc40
--- https://www.phpmyadmin.net/
---
--- Host: localhost
--- Generation Time: May 06, 2024 at 01:25 PM
--- Server version: 10.11.6-MariaDB
--- PHP Version: 8.3.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `brico-dz`
---
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `orders`
@@ -109,7 +89,7 @@ CREATE TABLE `vendor` (
 --
 
 INSERT INTO `vendor` (`vendor_id`, `vendor_name`, `vendor_email`, `register_date`, `vendor_status`, `vendor_password`, `points`, `balance`, `role`) VALUES
-(12, 'amine kerour', 'amine@gmail.com', '2024-04-06', 'active', '$2y$10$EaD5BZFiCj5rHz2C2dnvt.FE2pu5g/endFp0ZDh04sDSrQDxU9dM.', 30, 10, 'vendor'),
+(12, 'amine kerour', 'amine@gmail.com', '2024-04-06', 'active', '$2y$10$EaD5BZFiCj5rHz2C2dnvt.FE2pu5g/endFp0ZDh04sDSrQDxU9dM.', 20, 10, 'vendor'),
 (15, 'admin', 'o@admin.com', '2024-04-15', 'active', '$2y$10$0./d3wTML9GXT2MOHoQHPe93dqYmQVuccDKZeTZhXTTHJG7EVvBxu', 0, 0, 'admin'),
 (16, 'chiheb abiza', 'chiheb@gmail.com', '2024-04-16', 'active', '$2y$10$uSKiNBCwQ7QNOV4VJLB97ObhYpK1/iwPUKf9FMydIO19fZf4AK6ZG', 10, 10, 'vendor');
 
@@ -157,7 +137,3 @@ ALTER TABLE `product`
 ALTER TABLE `vendor`
   MODIFY `vendor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
