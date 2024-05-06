@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 include("../inc/head.php");
 
 // Include the header
-include("../inc/dash.php");
+include("../inc/header.php");
 ?>
 <div class="container mt-5">
     <h3 class="text-center">Convert Points to Balance</h3>

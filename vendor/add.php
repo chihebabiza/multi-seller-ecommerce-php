@@ -12,11 +12,10 @@ if (!isset($_SESSION['vendorName'])) {
 
 // Include database connection
 include("../config/connect.php");
+include("../config/function.php");
 
 // Check if the form is submitted
 if (isset($_POST['addProduct'])) {
-    // Include functions file
-    include("../config/function.php");
 
     // Get form data
     $productName = $_POST['productName'];
@@ -106,7 +105,7 @@ include("../inc/header.php");
         </div>
     </div>
 </div>
-<br><br><br><br><br>
+<br><br><br>
 <!-- End Contact Form -->
 
 <!-- Start Footer Section -->

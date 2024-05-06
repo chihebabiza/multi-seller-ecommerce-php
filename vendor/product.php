@@ -33,7 +33,7 @@ if (isset($_GET['product_id'])) {
 include("../inc/head.php");
 
 // include the header
-include("../inc/dash.php") ?>
+include("../inc/header.php") ?>
 
 <!-- include the style in this page only -->
 <style>
@@ -174,7 +174,7 @@ include("../inc/dash.php") ?>
 										<span class="fw-bold">Register Date : </span> <?php echo $seller['register_date']; ?>
 									</li>
 									<li class="list-group-item">
-										<span class="fw-bold">Total Orders : </span> <?php echo getVendorOrders($conn, $seller['vendor_name']); ?>
+										<span class="fw-bold">Total Orders : </span> <?php echo getVendorOrders($conn, $seller['vendor_id']); ?>
 									</li>
 								</ul>
 							<?php } else {

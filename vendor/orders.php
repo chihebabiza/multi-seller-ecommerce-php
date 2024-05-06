@@ -34,9 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 include("../inc/head.php");
 
 // Include the header
-include("../inc/dash.php");
+include("../inc/header.php");
 ?>
-
+<link rel="stylesheet" href="../css/dash.css">
 <div class="container mb-5">
     <!-- Start Welcome -->
     <div class="py-5 mb-2 lc-block">

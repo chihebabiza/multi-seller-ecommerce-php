@@ -21,8 +21,9 @@ $totalShippedAmount = getVendorTotalShippedOrders($vendorName, $conn);
 include("../inc/head.php");
 
 // Include the header
-include("../inc/dash.php");
+include("../inc/header.php");
 ?>
+<link rel="stylesheet" href="../css/dash.css">
 <div class="container mb-5">
     <!-- Start Welcome -->
     <div class="py-5 mb-2 lc-block">
@@ -134,7 +135,7 @@ include("../inc/dash.php");
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Shipped</h5>
                                 <br>
-                                <span class="h2 font-weight-bold mb-0"><?php echo getShippedOrders($conn); ?></span>
+                                <span class="h2 font-weight-bold mb-0"><?php echo getShippedOrders($conn, $vendor_id); ?></span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-success text-white rounded-circle shadow">
@@ -154,7 +155,7 @@ include("../inc/dash.php");
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Pending</h5>
                                 <br>
-                                <span class="h2 font-weight-bold mb-0"><?php echo getPendingOrders($conn); ?></span>
+                                <span class="h2 font-weight-bold mb-0"><?php echo getPendingOrders($conn, $vendor_id); ?></span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -174,7 +175,7 @@ include("../inc/dash.php");
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">Cancelled</h5>
                                 <br>
-                                <span class="h2 font-weight-bold mb-0"><?php echo getCancelledOrders($conn); ?></span>
+                                <span class="h2 font-weight-bold mb-0"><?php echo getCancelledOrders($conn, $vendor_id); ?></span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -189,98 +190,6 @@ include("../inc/dash.php");
     </div>
     <br><br><br>
     <!-- End Stats Orders -->
-
-    <!-- Stats Announcements -->
-    <!-- <div class="header-body">
-            <div class="row">
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Total Shipped Amount</h5>
-                                    <br>
-                                    <span class="h2 font-weight-bold mb-0"><?php echo $totalShippedAmount; ?> DZD</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-bar"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i>3.48%</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Points</h5>
-                                    <br>
-                                    <span class="h2 font-weight-bold mb-0"><?php echo getVendorPoints($vendorName, $conn); ?></span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-danger mr-2"><i class="fa fa-arrow-down"></i>1.19%</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Balance</h5>
-                                    <br>
-                                    <span class="h2 font-weight-bold mb-0"><?php echo getVendorBalance($vendorName, $conn); ?> DZD</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                                        <i class="fas fa-users"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-warning mr-2"><i class="fa fa-arrow-down"></i>3.48%</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Balance</h5>
-                                    <br>
-                                    <span class="h2 font-weight-bold mb-0"><?php echo getVendorBalance($vendorName, $conn); ?> DZD</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                                        <i class="fas fa-users"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-warning mr-2"><i class="fa fa-arrow-down"></i>3.48%</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br> -->
-    <!-- End Stats Announcements -->
 </div>
 <!-- Start Footer -->
 <br><br><br>

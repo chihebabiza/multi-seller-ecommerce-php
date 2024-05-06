@@ -18,7 +18,7 @@ $products = getProductsByVendorName($vendorName, $conn);
 include("../inc/head.php");
 
 // Include the header
-include("../inc/dash.php");
+include("../inc/header.php");
 ?>
 
 <style>
@@ -35,8 +35,13 @@ include("../inc/dash.php");
         background-color: #c82333;
         border-color: #bd2130;
     }
-</style>
 
+    .title {
+        height: 72px;
+        overflow: hidden;
+    }
+</style>
+<link rel="stylesheet" href="../css/dash.css">
 <div class="container mb-5">
     <!-- Start Welcome -->
     <div class="py-5 mb-2 lc-block">
@@ -66,7 +71,7 @@ include("../inc/dash.php");
                             <div class="card mb-4">
                                 <img src="../uploads/<?php echo $product['image']; ?>" alt="<?php echo $product['product_name']; ?>" class="product-img card-img-top">
                                 <div class="card-body">
-                                    <h2 class="card-title"><?php echo $product['product_name']; ?></h2>
+                                    <h2 class="card-title title"><?php echo $product['product_name']; ?></h2>
                                     <p class="card-text" style="height: 185px;overflow: hidden;"><?php echo $product['description']; ?></p>
                                     <p class="card-text">Price: <?php echo $product['price']; ?> DZD</p>
                                     <p class="card-text">Status: <span class="badge bg-<?php echo getStatusColorClass($product['status']); ?>"><?php echo ucfirst($product['status']); ?></span></p>
@@ -107,7 +112,7 @@ include("../inc/dash.php");
     </section>
 </div>
 <!-- Start Footer -->
-<br><br><br>
+<br><br>
 <?php include("../inc/footer.php") ?>
 <!-- End Footer -->
 </body>

@@ -100,7 +100,7 @@ include("../inc/header.php");
                         <option value="" disabled>Select a category</option>
                         <?php
                         // Fetch categories from the database
-                        $categories = ['Electronics', 'Fashion', 'Home & Garden', 'Books, Movies & Music', 'Collectibles & Antiques', 'Sports & Outdoors', 'Toys & Games', 'Health & Beauty', 'Automotive', 'Miscellaneous', 'Other'];
+                        $categories = ['Computer Components', 'Home Appliances', 'Auto Parts'];
                         foreach ($categories as $cat) {
                             $selected = ($cat == $product['category']) ? 'selected' : '';
                             echo '<option value="' . $cat . '" ' . $selected . '>' . $cat . '</option>';
