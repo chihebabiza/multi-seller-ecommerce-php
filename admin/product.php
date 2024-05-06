@@ -192,7 +192,6 @@ include("../inc/header.php") ?>
 	<!-- End Related Products Section -->
 	<br><br><br>
 </section>
-
-<!-- Footer -->
-<?php include("../inc/footer.php") ?>
-<!-- Footer -->
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/tiny-slider.js"></script>
+<script src="../js/custom.js"></script>

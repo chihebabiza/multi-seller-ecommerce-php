@@ -99,8 +99,6 @@ include("../inc/header.php");
     </div>
     <!-- End Stats -->
 </div>
-
-<!-- Start Footer -->
-<br><br><br><br><br><br><br>
-<?php include("../inc/footer.php") ?>
-<!-- End Footer -->
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/tiny-slider.js"></script>
+<script src="../js/custom.js"></script>

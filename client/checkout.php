@@ -47,6 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				// Update vendor points
 				$pointsToAdd = 5 * $quantity;
 				addVendorPoints($seller_name, $pointsToAdd, $conn);
+
+				// Update quantity
+				updateQuantity($product_id, $quantity, $status, $conn);
 			}
 		}
 	}
@@ -214,11 +217,12 @@ include("../inc/header.php") ?>
 			<!-- </form> -->
 	</div>
 </div>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/tiny-slider.js"></script>
+<script src="../js/custom.js"></script>
 <!-- End Form -->
 
 <?php
-			// include the footer
-			include("../inc/footer.php");
 		}
 
 		// Check if the reset button is clicked

@@ -188,10 +188,9 @@ include("../inc/header.php");
             </div>
         </div>
     </div>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/tiny-slider.js"></script>
+    <script src="../js/custom.js"></script>
     <br><br><br>
     <!-- End Stats Orders -->
 </div>
-<!-- Start Footer -->
-<br><br><br>
-<?php include("../inc/footer.php") ?>
-<!-- End Footer -->

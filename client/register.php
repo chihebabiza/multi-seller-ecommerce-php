@@ -77,11 +77,10 @@ include("../inc/header.php");
 		<p>Already have an account? <a href="login.php">Log in</a></p>
 	</div>
 </div>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/tiny-slider.js"></script>
+<script src="../js/custom.js"></script>
 <!-- End Contact Form -->
-
-<!-- Start Footer Section -->
-<?php include("../inc/footer.php") ?>
-<!-- End Footer Section -->
 
 <script>
 	const passwordInput = document.getElementById('password');

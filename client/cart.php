@@ -142,10 +142,11 @@ include("../inc/header.php") ?>
 		</div>
 	</div>
 </div>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/tiny-slider.js"></script>
+<script src="../js/custom.js"></script>
 <!-- End Cart -->
 
 <?php
-				// include the footer
-				include("../inc/footer.php");
 			}
 ?>

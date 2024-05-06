@@ -60,11 +60,10 @@ include("../inc/header.php");
 		</div>
 	</div>
 </div>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/tiny-slider.js"></script>
+<script src="../js/custom.js"></script>
 <!-- End Contact Form -->
-
-<!-- Start Footer Section -->
-<?php include("../inc/footer.php") ?>
-<!-- End Footer Section -->
 
 <script>
 	const passwordInput = document.getElementById('password');

@@ -31,8 +31,6 @@ include("../inc/header.php");
 		</div>
 	</div>
 </div>
-<!-- Start Thankyou -->
-
-<!-- Start Footer Section -->
-<?php include("../inc/footer.php") ?>
-<!-- End Footer Section -->
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/tiny-slider.js"></script>
+<script src="../js/custom.js"></script>
