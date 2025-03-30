@@ -12,23 +12,14 @@ This is a PHP-based multi-vendor marketplace that allows multiple sellers to reg
 - **Cart System**: Users can add multiple products from different sellers.
 - **Admin Dashboard**: Manage users, products, and site settings.
 - **Secure Authentication**: Secure login and registration system.
-- **Payment Integration**: Supports online payments through various gateways.
-- **User Reviews & Ratings**: Customers can leave reviews for products.
 - **Responsive Design**: Fully responsive layout for mobile and desktop.
 
 ## Installation
 
 1. Clone the repository or download the source files.
-2. Import the `database.sql` file into your MySQL database.
-3. Configure the database in `config.php`:
-   ```php
-   define('DB_HOST', 'localhost');
-   define('DB_USER', 'your_username');
-   define('DB_PASS', 'your_password');
-   define('DB_NAME', 'your_database');
-   ```
+2. Import the database folder file into your MySQL database.
+3. Configure the database in config folder:
 4. Start the local server using XAMPP or any PHP environment.
-5. Open your browser and navigate to `http://localhost/multi-vendor`.
 
 ## Requirements
 
@@ -42,14 +33,15 @@ This is a PHP-based multi-vendor marketplace that allows multiple sellers to reg
 ```
 / multi-vendor
 |-- /admin          # Admin panel
-|-- /seller         # Seller dashboard
-|-- /customer       # Customer panel
-|-- /includes       # Reusable functions and database connection
-|-- /assets         # CSS, JS, and images
-|-- /config.php     # Configuration file
-|-- /index.php      # Homepage
-|-- /login.php      # User login
-|-- /register.php   # User registration
+|-- /client         # client dashboard
+|-- /config         # config folder
+|-- /css            # css code here
+|-- /database       # sql database file
+|-- /images         # images assets
+|-- /inc            # include headers footers ....
+|-- /js             # js code here
+|-- /vendor         # vendor panel
+|-- /uploads        # uploads here
 ```
 
 ## Usage
@@ -78,8 +70,4 @@ For any inquiries, feel free to reach out:
 
 Contributions are welcome! Feel free to submit a pull request or report issues.
 
-## Acknowledgments
-
-- [Bootstrap](https://getbootstrap.com/) for UI components.
-- [FontAwesome](https://fontawesome.com/) for icons.
 
